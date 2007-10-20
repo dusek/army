@@ -7,8 +7,8 @@ std::string StreamMemory::read(addr_t addr, size_t bytes) {
 	char *buffer = new char[bytes];
 	this->stream->read(buffer, bytes);
 	std::string ret(buffer,bytes);
-	return ret;
 	delete[] buffer;
+	return ret;
 }
 
 void StreamMemory::write(addr_t addr, std::string data) {
