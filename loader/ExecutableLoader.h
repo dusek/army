@@ -13,9 +13,9 @@ public:
 	 * stores it in memory "memory"
 	 *
 	 * Return value:
-	 *   true if successful, false otherwise
+	 *   Address of entry point in the executable image.
 	 */
-	virtual bool load(Memory *memory) = 0;
+	virtual addr_t load(Memory *memory) = 0;
 	virtual ~ExecutableLoader(){};
 
 protected:

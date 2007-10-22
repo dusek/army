@@ -81,7 +81,7 @@ ELFLoader::ELFLoader(std::iostream *executable):
 	ExecutableLoader(executable)
 {}
 
-bool ELFLoader::load(Memory *memory)
+addr_t ELFLoader::load(Memory *memory)
 {
     Elf32_Ehdr elf_header;
     executable->seekg(0);
@@ -130,4 +130,5 @@ bool ELFLoader::load(Memory *memory)
             executable->seekg(elf_header.e_phentsize - sizeof(ph_entry), std::ios_base::cur);
         }
     }
+	return elf_header.e_entry;
 }

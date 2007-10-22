@@ -6,7 +6,7 @@
 class ELFLoader: public ExecutableLoader {
 public:
 	ELFLoader(std::iostream *executable);
-	bool load(Memory *memory);
+	addr_t load(Memory *memory);
 	~ELFLoader() {};
 };
 
