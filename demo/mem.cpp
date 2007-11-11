@@ -2,9 +2,9 @@
 #include <fstream>
 #include <cassert>
 
-#include "StreamMemory.h"
-#include "PagedMemory.h"
-#include "CollectionMemory.h"
+#include "memory/StreamMemory.h"
+#include "memory/PagedMemory.h"
+#include "memory/CollectionMemory.h"
 
 int main (int argc, char *argv[])
 {

@@ -1,8 +1,8 @@
 #include <fstream>
 
-#include "StreamMemory.h"
-#include "PagedMemory.h"
-#include "ELFLoader.h"
+#include "memory/StreamMemory.h"
+#include "memory/PagedMemory.h"
+#include "loader/ELFLoader.h"
 
 int main (int argc, char *argv[]) {
 	if (argc != 3) {
