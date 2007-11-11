@@ -2,8 +2,9 @@
 #define __MEMORY_H__
 
 #include <string>
+#include "platform/pstdint.h"
 
-typedef unsigned int addr_t;
+typedef uint32_t addr_t;
 
 class Memory
 {
@@ -15,4 +16,3 @@ public:
 };
 
 #endif
-

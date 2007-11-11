@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "Memory.h"
+#include "memory/Memory.h"
 
 class ExecutableLoader {
 public:
