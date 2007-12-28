@@ -18,9 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
+			InheritedPropertySheets="..\army.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -92,6 +91,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
+			InheritedPropertySheets="..\army.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -170,12 +170,128 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath="..\..\..\memory\CollectionMemory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\core\CPU.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\loader\ELFLoader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\memory\EndianMemory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\ImmediateArgument.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\Instruction.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\MemoryArgument.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\memory\PagedMemory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\RegisterArgument.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\memory\StreamMemory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\util.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\..\..\instructions\Argument.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\memory\CollectionMemory.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\core\CPU.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\core\CPU_p.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\memory\DecoratorMemory.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\loader\ELFLoader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\memory\EndianMemory.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\core\Enum.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\loader\ExecutableLoader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\ImmediateArgument.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\Instruction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\memory\Memory.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\MemoryArgument.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\memory\PagedMemory.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\platform\pstdint.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\RegisterArgument.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\memory\StreamMemory.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\util.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
