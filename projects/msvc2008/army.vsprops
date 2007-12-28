@@ -22,7 +22,7 @@
 	/>
 	<UserMacro
 		Name="Prefix"
-		Value="..\..\..\.."
+		Value="$(SolutionDir)..\..\.."
 	/>
 	<UserMacro
 		Name="PrefixBin"
