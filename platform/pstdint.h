@@ -182,10 +182,6 @@
  *
  */
 
-#if 1
-# include <stdint.h>
-#else
-
 #include <stddef.h>
 #include <limits.h>
 #include <signal.h>
@@ -680,5 +676,4 @@ typedef uint_least32_t uint_fast32_t;
 # define SIG_ATOMIC_MAX ((((sig_atomic_t) 1) << (sizeof (sig_atomic_t)*CHAR_BIT-1)) - 1)
 #endif
 
-#endif
 #endif
