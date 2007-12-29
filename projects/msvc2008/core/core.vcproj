@@ -175,10 +175,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\core\CPU.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\loader\ELFLoader.cpp"
 				>
 			</File>
