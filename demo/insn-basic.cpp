@@ -1,5 +1,6 @@
 #include "instructions/Instruction.h"
 #include "instructions/RegisterArgument.h"
+#include "instructions/ImmediateArgument.h"
 
 #include <iostream>
 
@@ -8,7 +9,7 @@ public:
     TestInstruction() {
         args.push_back(new RegisterArgument(R11));
         args.push_back(new RegisterArgument(R4));
-        args.push_back(new RegisterArgument(R15));
+        args.push_back(new ImmediateArgument(3));
     }
 
     void decode(uint32_t insn_word){}
@@ -16,6 +17,9 @@ public:
     bool executable(CPU &cpu) const {return true;}
 
     void execute(CPU &cpu) const {}
+
+protected:
+    std::string str_qualifiers() const { return ""; }
 
 protected:
     uint32_t mask() const {return 0;}
