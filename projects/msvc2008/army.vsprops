@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="army"
+	OutputDirectory="$(PrefixBin)\$(ConfigurationName)"
+	IntermediateDirectory="$(PrefixBin)\.libs\$(ConfigurationName)\$(ProjectName)"
+	>
+	<Tool
+		Name="VCBscMakeTool"
+		OutputFile="$(IntDir)/$(ProjectName).bsc"
+	/>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="$(PrefixSrc)"
+		PreprocessorDefinitions="$(ProjectName)_EXPORTS"
+		DisableLanguageExtensions="true"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		ImportLibrary="$(IntDir)\$(TargetName).lib"
+	/>
+	<UserMacro
+		Name="Prefix"
+		Value="$(SolutionDir)..\..\.."
+	/>
+	<UserMacro
+		Name="PrefixBin"
+		Value="$(Prefix)\bin\windows"
+	/>
+	<UserMacro
+		Name="PrefixSrc"
+		Value="$(Prefix)\src"
+	/>
+</VisualStudioPropertySheet>
