@@ -50,17 +50,28 @@ protected:
     virtual uint32_t mask() const = 0;
 
     /**
-     * \see mask()
-     */
-    virtual uint32_t bits() const = 0;
-
-    /**
      * Mnemonic representing this instruction in assembly-like language.
      */
     virtual std::string mnemonic() const = 0;
 
+    /**
+     * Returns stringified mnemonic qualifier
+     */
+    virtual std::string str_qualifiers() const = 0;
+
+    /**
+     * Returns the string representation of "executable" mnemonic qualifier
+     */
+    virtual std::string str_condition_code() const;
+
+    /**
+     * \see mask()
+     */
+    virtual uint32_t bits() const = 0;
+
 protected:
     std::vector<Argument *> args;
+    std::bitset<4> condition_code;
 };
 
 #endif

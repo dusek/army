@@ -1,5 +1,5 @@
-#include "instructions/util.h"
 #include <cassert>
+#include "instructions/util.h"
 
 int get_bit_range_value(uint32_t word, int start, int end)
 {

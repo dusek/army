@@ -10,6 +10,8 @@ std::string Instruction::to_string(bool verbose) const
     std::string ret;
 
     ret += mnemonic();
+    ret += str_qualifiers();
+    ret += str_condition_code();
     ret += " ";
     std::vector<Argument *>::const_iterator it;
     bool first = true;
@@ -34,4 +36,9 @@ Instruction::~Instruction() {
     std::vector<Argument *>::const_iterator it;
     for (it = args.begin(); it != args.end(); ++it)
         delete (*it);
+}
+
+std::string Instruction::str_condition_code() const {
+    //FIXME stub
+    return "";
 }
