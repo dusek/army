@@ -2,6 +2,7 @@
 #define __CPU_H__
 
 class Instruction;
+class Memory;
 
 #include <bitset>
 
@@ -52,12 +53,21 @@ typedef enum {
 } ARM_Register;
 
 typedef enum {
+    T=5,
+    F,
+    I,
+    Q=27,
+    V,
+    C,
+    Z,
+    N
 } CPSR_Bit;
 
 ENUM_LAST(ARM_Register,PC);
 
 class CPU {
 public:
+    CPU(Memory *mem);
     void step();
     void execute(Instruction *insn);
     void run(uint32_t breakpoint);
