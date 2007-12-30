@@ -13,11 +13,12 @@
 	<Tool
 		Name="VCCLCompilerTool"
 		AdditionalIncludeDirectories="$(PrefixSrc)"
-		PreprocessorDefinitions="$(ProjectName)_EXPORTS"
+		PreprocessorDefinitions="$(TargetName)_EXPORTS"
 		DisableLanguageExtensions="true"
 	/>
 	<Tool
 		Name="VCLinkerTool"
+		OutputFile="$(OutDir)\$(SolutionName)$(ProjectName).exe"
 		ImportLibrary="$(IntDir)\$(TargetName).lib"
 	/>
 	<UserMacro
