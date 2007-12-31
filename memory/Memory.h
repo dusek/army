@@ -2,11 +2,12 @@
 #define __MEMORY_H__
 
 #include <string>
+#include "armyconfig.h"
 #include "platform/pstdint.h"
 
 typedef uint32_t addr_t;
 
-class Memory
+class ARMYCORE_EXPORT Memory
 {
 public:
 	virtual std::string read (addr_t addr, size_t bytes) = 0;

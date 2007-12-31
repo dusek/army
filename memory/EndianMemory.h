@@ -1,9 +1,10 @@
 #ifndef __ENDIAN_MEMORY_H__
 #define __ENDIAN_MEMORY_H__
 
+#include "armyconfig.h"
 #include "DecoratorMemory.h"
 
-class EndianMemory: public DecoratorMemory {
+class ARMYCORE_EXPORT EndianMemory: public DecoratorMemory {
 public:
 	enum Endianness {
 		LittleEndian,

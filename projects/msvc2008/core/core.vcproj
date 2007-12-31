@@ -40,7 +40,6 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;CORE_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -59,6 +58,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				OutputFile="$(OutDir)\$(SolutionName)$(ProjectName).dll"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -218,6 +218,10 @@
 			>
 			<File
 				RelativePath="..\..\..\instructions\Argument.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\armyconfig.h"
 				>
 			</File>
 			<File

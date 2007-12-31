@@ -1,12 +1,13 @@
 #ifndef __COLLECTION_MEMORY_H__
 #define __COLLECTION_MEMORY_H__
 
+#include "armyconfig.h"
 #include "Memory.h"
 
 #include <vector>
 #include <utility>
 
-class CollectionMemory: public Memory {
+class ARMYCORE_EXPORT CollectionMemory: public Memory {
 public:
 	void add_memrange(addr_t start, addr_t end, Memory *engine);
 	std::string read(addr_t addr, size_t bytes);

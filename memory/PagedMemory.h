@@ -1,11 +1,12 @@
 #ifndef __PAGED_MEMORY_H__
 #define __PAGED_MEMORY_H__
 
+#include "armyconfig.h"
 #include "DecoratorMemory.h"
 
 #include <map>
 
-class PagedMemory: public DecoratorMemory {
+class ARMYCORE_EXPORT PagedMemory: public DecoratorMemory {
 public:
 	PagedMemory(Memory *engine, size_t page_size_exp = 12);
 	std::string read (addr_t addr, size_t bytes);

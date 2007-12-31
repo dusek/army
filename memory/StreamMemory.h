@@ -3,9 +3,10 @@
 
 #include <iostream>
 
+#include "armyconfig.h"
 #include "Memory.h"
 
-class StreamMemory: public Memory {
+class ARMYCORE_EXPORT StreamMemory: public Memory {
 public:
 	StreamMemory(std::iostream *stream): stream(stream){};
 	std::string read (addr_t addr, size_t bytes);
