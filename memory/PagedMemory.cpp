@@ -1,27 +1,37 @@
-#include "PagedMemory.h"
-
+#include <map>
 #include <iostream>
 
+#include "PagedMemory.h"
+
+class PagedMemory::PagedMemoryImpl {
+public:
+    PagedMemoryImpl(size_t page_size_exp): page_size_exp(page_size_exp) {
+        page_size = 1 << page_size_exp;
+    };
+    size_t page_size_exp;
+    size_t page_size;
+    std::map<addr_t,addr_t> page_index;
+};
+
 PagedMemory::PagedMemory(Memory *engine, size_t page_size_exp):
-page_size_exp(page_size_exp)
+d (new PagedMemoryImpl(page_size_exp))
 {
     this->engine = engine;
-    page_size = 1 << this->page_size_exp;
 }
 
 std::pair<addr_t,size_t> PagedMemory::virtual_to_physical(addr_t virtual_addr, bool create_on_demand) {
     std::cout << " Mapping address " << std::hex << virtual_addr << std::endl;
-    addr_t virtual_aligned = virtual_addr / page_size;
-    addr_t offset = virtual_addr % page_size;
+    addr_t virtual_aligned = virtual_addr / d->page_size;
+    addr_t offset = virtual_addr % d->page_size;
     addr_t page_start;
-    std::map<addr_t,addr_t>::iterator it = this->page_index.find(virtual_aligned);
-    if (it == this->page_index.end()) {
+    std::map<addr_t,addr_t>::iterator it = d->page_index.find(virtual_aligned);
+    if (it == d->page_index.end()) {
         std::cout << "  Page does not exist" << std::endl;
         if (create_on_demand) {
             //Page not found; insert it as requested
-            page_start = page_index.size() * page_size;
+            page_start = d->page_index.size() * d->page_size;
             std::cout << "  Creating page at " << page_start << " ... ";
-            this->page_index.insert(std::pair<addr_t,addr_t>(virtual_aligned, page_start));
+            d->page_index.insert(std::pair<addr_t,addr_t>(virtual_aligned, page_start));
             std::cout << "done" << std::endl;
         } else {
             std::cout << "  !!!Not creating page as requested" << std::endl;
@@ -32,7 +42,7 @@ std::pair<addr_t,size_t> PagedMemory::virtual_to_physical(addr_t virtual_addr, b
         std::cout << "  page exists, mapped to " << page_start << std::endl;
     }
     std::cout << std::dec;
-    return std::pair<addr_t,size_t>(page_start + offset, (size_t)(page_size - offset));
+    return std::pair<addr_t,size_t>(page_start + offset, (size_t)(d->page_size - offset));
 }
 
 std::string PagedMemory::read(addr_t addr, size_t bytes)

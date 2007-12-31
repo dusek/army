@@ -4,8 +4,6 @@
 #include "armyconfig.h"
 #include "DecoratorMemory.h"
 
-#include <map>
-
 class ARMYCORE_EXPORT PagedMemory: public DecoratorMemory {
 public:
     PagedMemory(Memory *engine, size_t page_size_exp = 12);
@@ -32,9 +30,8 @@ protected:
                                                 bool create_on_demand = true);
 
 private:
-    size_t page_size_exp;
-    size_t page_size;
-    std::map<addr_t,addr_t> page_index;
+    class PagedMemoryImpl;
+    PagedMemoryImpl *const d;
 };
 
 #endif
