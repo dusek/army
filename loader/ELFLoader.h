@@ -5,9 +5,9 @@
 
 class ELFLoader: public ExecutableLoader {
 public:
-	ELFLoader(std::iostream *executable);
-	addr_t load(Memory *memory);
-	~ELFLoader() {};
+    ELFLoader(std::iostream *executable);
+    addr_t load(Memory *memory);
+    ~ELFLoader() {};
 };
 
 #endif

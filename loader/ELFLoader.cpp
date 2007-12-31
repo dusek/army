@@ -78,7 +78,7 @@ enum {
 };
 
 ELFLoader::ELFLoader(std::iostream *executable):
-	ExecutableLoader(executable)
+    ExecutableLoader(executable)
 {}
 
 addr_t ELFLoader::load(Memory *memory)
@@ -130,5 +130,5 @@ addr_t ELFLoader::load(Memory *memory)
             executable->seekg(elf_header.e_phentsize - sizeof(ph_entry), std::ios_base::cur);
         }
     }
-	return elf_header.e_entry;
+    return elf_header.e_entry;
 }

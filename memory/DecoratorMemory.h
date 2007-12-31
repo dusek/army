@@ -6,9 +6,9 @@
 
 class ARMYCORE_EXPORT DecoratorMemory: public Memory {
 public:
-	~DecoratorMemory() { delete engine; }
+    ~DecoratorMemory() { delete engine; }
 protected:
-	Memory *engine;
+    Memory *engine;
 };
 
 #endif

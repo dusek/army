@@ -6,19 +6,19 @@
 
 class ARMYCORE_EXPORT EndianMemory: public DecoratorMemory {
 public:
-	enum Endianness {
-		LittleEndian,
-		BigEndian
-	};
-	EndianMemory(Memory *engine, Endianness end);
-	std::string read(addr_t addr, size_t bytes);
-	void       write(addr_t addr, std::string data);
+    enum Endianness {
+        LittleEndian,
+        BigEndian
+    };
+    EndianMemory(Memory *engine, Endianness end);
+    std::string read(addr_t addr, size_t bytes);
+    void       write(addr_t addr, std::string data);
 
-	int   read(addr_t addr, size_t bytes = 4, bool signed_ = false);
-	void write(addr_t addr, int value, size_t bytes = 4, bool signed_ = false);
+    int   read(addr_t addr, size_t bytes = 4, bool signed_ = false);
+    void write(addr_t addr, int value, size_t bytes = 4, bool signed_ = false);
 
 private:
-	Endianness endianness;
+    Endianness endianness;
 };
 
 #endif

@@ -8,11 +8,11 @@
 
 class ARMYCORE_EXPORT StreamMemory: public Memory {
 public:
-	StreamMemory(std::iostream *stream): stream(stream){};
-	std::string read (addr_t addr, size_t bytes);
-	void   write(addr_t addr, std::string data);
+    StreamMemory(std::iostream *stream): stream(stream){};
+    std::string read (addr_t addr, size_t bytes);
+    void   write(addr_t addr, std::string data);
 private:
-	std::iostream *stream;
+    std::iostream *stream;
 };
 
 #endif
