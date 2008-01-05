@@ -16,3 +16,6 @@ void StreamMemory::write(addr_t addr, std::string data) {
     this->stream->write(data.c_str(), data.length());
 }
 
+StreamMemory::~StreamMemory() {
+    delete stream;
+}
