@@ -2,7 +2,7 @@
 #define __ENDIAN_MEMORY_H__
 
 #include "armyconfig.h"
-#include "DecoratorMemory.h"
+#include "memory/DecoratorMemory.h"
 
 class ARMYCORE_EXPORT EndianMemory: public DecoratorMemory {
 public:
