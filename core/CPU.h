@@ -72,8 +72,8 @@ public:
     void execute(Instruction *insn);
     void run(uint32_t breakpoint);
     
-    void     set_reg(ARM_Register reg, uint32_t value){/*FIXME stub*/}
-    uint32_t get_reg(ARM_Register reg){/*FIXME stub*/ return 0;}
+    void     set_reg(ARM_Register, uint32_t){/*FIXME stub*/}
+    uint32_t get_reg(ARM_Register){/*FIXME stub*/ return 0;}
     
     PROPERTY_ACCESS(mode,ARM_Mode);
 

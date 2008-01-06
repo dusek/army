@@ -5,7 +5,7 @@ bool Instruction::represented_by(uint32_t insn_word) const
     return (insn_word & mask()) == (bits() & mask());
 }
 
-std::string Instruction::to_string(bool verbose) const
+std::string Instruction::to_string(bool) const
 {
     std::string ret;
 
@@ -27,7 +27,7 @@ std::string Instruction::to_string(bool verbose) const
     return ret;
 }
 
-bool Instruction::executable(CPU &cpu) const {
+bool Instruction::executable(CPU &) const {
     //FIXME stub
     return true;
 }

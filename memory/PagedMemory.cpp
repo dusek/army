@@ -102,4 +102,3 @@ void PagedMemory::write(addr_t addr, std::string data)
         bytes -= left;
     }
 }
-

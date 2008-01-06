@@ -8,11 +8,11 @@ void ImmediateArgument::decode(uint32_t insn_word, int start, int end) {
     value_ = get_bit_range_value(insn_word, start, end);
 }
 
-uint32_t ImmediateArgument::read(CPU &cpu) const {
+uint32_t ImmediateArgument::read(CPU &) const {
     return value_;
 }
 
-void ImmediateArgument::store(CPU &cpu, uint32_t value) const {
+void ImmediateArgument::store(CPU &, uint32_t) const {
     assert(false);//can't write to an immediate value
 }
 
