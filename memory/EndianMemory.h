@@ -12,7 +12,7 @@ public:
     };
     EndianMemory(Memory *engine, Endianness end);
     std::string read(addr_t addr, size_t bytes);
-    void       write(addr_t addr, std::string data);
+    void       write(addr_t addr, const std::string &data);
 
     int   read(addr_t addr, size_t bytes = 4, bool signed_ = false);
     void write(addr_t addr, int value, size_t bytes = 4, bool signed_ = false);

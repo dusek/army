@@ -8,7 +8,7 @@ class ARMYCORE_EXPORT PagedMemory: public DecoratorMemory {
 public:
     PagedMemory(Memory *engine, size_t page_size_exp = 12);
     std::string read (addr_t addr, size_t bytes);
-    void   write(addr_t addr, std::string data);
+    void   write(addr_t addr, const std::string &data);
 
 protected:
     /**

@@ -72,7 +72,7 @@ std::string PagedMemory::read(addr_t addr, size_t bytes)
     return ret;
 }
 
-void PagedMemory::write(addr_t addr, std::string data) 
+void PagedMemory::write(addr_t addr, const std::string &data)
 {
     std::string to_write;
     size_t pos = 0;

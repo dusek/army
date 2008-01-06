@@ -58,7 +58,7 @@ std::string CollectionMemory::read(addr_t addr, size_t bytes) {
     return engine->read(addr, bytes);
 }
 
-void CollectionMemory::write(addr_t addr, std::string data) {
+void CollectionMemory::write(addr_t addr, const std::string &data) {
     std::string ret;
 
     std::pair<std::pair<addr_t,size_t>, Memory *> target_info = d->get_engine(addr);

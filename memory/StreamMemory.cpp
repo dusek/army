@@ -11,7 +11,7 @@ std::string StreamMemory::read(addr_t addr, size_t bytes) {
     return ret;
 }
 
-void StreamMemory::write(addr_t addr, std::string data) {
+void StreamMemory::write(addr_t addr, const std::string &data) {
     this->stream->seekp(addr);
     this->stream->write(data.c_str(), data.length());
 }

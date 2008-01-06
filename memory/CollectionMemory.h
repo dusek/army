@@ -9,7 +9,7 @@ public:
     CollectionMemory();
     void add_memrange(addr_t start, addr_t end, Memory *engine);
     std::string read(addr_t addr, size_t bytes);
-    void       write(addr_t addr, std::string data);
+    void       write(addr_t addr, const std::string &data);
     ~CollectionMemory();
 
 private:
