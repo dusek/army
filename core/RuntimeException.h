@@ -7,7 +7,7 @@
 
 #include "armyconfig.h"
 
-class RuntimeException : public Exception {
+class ARMYCORE_EXPORT RuntimeException : public Exception {
 public:
     void output(std::ostream &o) const;
     void set_addr(addr_t addr) { offending_insn_addr_ = addr; };

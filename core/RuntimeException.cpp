@@ -1,5 +1,3 @@
-#include <ostream>
-
 #include "core/RuntimeException.h"
 
 void RuntimeException::output(std::ostream &o) const {
