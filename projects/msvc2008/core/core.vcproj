@@ -185,27 +185,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\instructions\ImmediateArgument.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\instructions\Instruction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\instructions\MemoryArgument.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\memory\PagedMemory.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\core\ProgramStatusRegister.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\instructions\RegisterArgument.cpp"
 				>
 			</File>
 			<File
@@ -239,14 +223,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\core\CPU.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\CPU_p.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\core\CPURegisters.h"
 				>
 			</File>
@@ -263,10 +239,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\core\Enum.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\core\Exception.h"
 				>
 			</File>
@@ -275,19 +247,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\instructions\ImmediateArgument.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\instructions\Instruction.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\memory\Memory.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\instructions\MemoryArgument.h"
 				>
 			</File>
 			<File
@@ -303,19 +263,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\instructions\RegisterArgument.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\core\RuntimeException.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\memory\StreamMemory.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\instructions\util.h"
 				>
 			</File>
 		</Filter>
