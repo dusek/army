@@ -49,10 +49,13 @@ std::string CollectionMemory::read(addr_t addr, size_t bytes) {
 
     std::pair<std::pair<addr_t,size_t>, Memory *> target_info = d->get_engine(addr);
     addr_t offset = target_info.first.first;
+#ifndef NDEBUG
     addr_t left = target_info.first.second;
 
     assert(left > 0);
     assert(left >= bytes);
+#endif
+
     addr -= offset;
     Memory *engine = target_info.second;
     return engine->read(addr, bytes);
@@ -63,10 +66,13 @@ void CollectionMemory::write(addr_t addr, const std::string &data) {
 
     std::pair<std::pair<addr_t,size_t>, Memory *> target_info = d->get_engine(addr);
     addr_t offset = target_info.first.first;
+#ifndef NDEBUG
     addr_t left = target_info.first.second;
 
     assert(left > 0);
     assert(left >= data.length());
+#endif
+
     addr -= offset;
     Memory *engine = target_info.second;
     engine->write(addr, data);

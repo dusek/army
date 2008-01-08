@@ -139,23 +139,25 @@ public:
             throw e;
         }
 
+        RealSavedStatusRegister realSavedReg = SPSR_fiq;
         switch (mode) {
             case ProgramStatusRegister::Supervisor:
-                return SPSR_svc; break;
+                realSavedReg = SPSR_svc; break;
             case ProgramStatusRegister::Abort:
-                return SPSR_abt; break;
+                realSavedReg = SPSR_abt; break;
             case ProgramStatusRegister::Undefined:
-                return SPSR_und; break;
+                realSavedReg = SPSR_und; break;
             case ProgramStatusRegister::IRQ:
-                return SPSR_irq; break;
+                realSavedReg = SPSR_irq; break;
             case ProgramStatusRegister::FIQ:
-                return SPSR_fiq; break;
+                realSavedReg = SPSR_fiq; break;
             default:
                 assert(!"Unhandled mode");
                 //to make C4715 happy
-                return SPSR_fiq;
                 break;
         }
+
+        return realSavedReg;
     }
 };
 

@@ -4,6 +4,8 @@
 #include "armyconfig.h"
 
 class ARMYCORE_EXPORT Exception {
+public:
+    virtual ~Exception(){};
 };
 
 #endif
