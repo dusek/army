@@ -8,12 +8,12 @@ public:
 
 protected:
     void output_details(std::ostream &o) const {
-        o << "SPSR not available in ";
+        o << "Attempt to access SPSR in ";
         if (mode == ProgramStatusRegister::User)
             o << "User";
         else
             o << "System";
-        o << " mode." << std::endl;
+        o << " mode. Results of this are defined as UNPREDICTABLE." << std::endl;
     };
 };
 
