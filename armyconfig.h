@@ -13,6 +13,9 @@
 #   define ARMYCORE_EXPORT
 #endif
 
+//FIXME the <iostream> include is there just to fix compiling on Linux x86 (g++ 4.1.2)
+//it is not needed on Mac OS X Tiger x86 (g++ 4.0.1) or Win XP XP2 (MSVC 9.0)
+#include <iostream>
 #include "platform/pstdint.h"
 
 typedef uint32_t ARM_Word;
