@@ -51,3 +51,4 @@ bool ProgramStatusRegister::operator==(const ProgramStatusRegister &other) const
     }
     return false;
 }
+
