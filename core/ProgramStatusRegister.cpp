@@ -40,7 +40,9 @@ ProgramStatusRegister::Mode ProgramStatusRegister::get_mode() const
 
 void ProgramStatusRegister::set_mode(ProgramStatusRegister::Mode mode)
 {
-    value_ |= mode_to_int[mode];
+    ARM_Word mask = mode_to_int[mode];
+    value_ |= mask;
+    value_ &= mask;
     cached_mode_ = mode;
 }
 
