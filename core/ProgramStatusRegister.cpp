@@ -52,3 +52,55 @@ bool ProgramStatusRegister::operator==(const ProgramStatusRegister &other) const
     return false;
 }
 
+std::ostream &operator<<(std::ostream &o, ProgramStatusRegister psr)
+{
+    ProgramStatusRegister::Mode mode = psr.get_mode();
+    switch(mode) {
+        case ProgramStatusRegister::User:
+            o << "User";
+            break;
+        case ProgramStatusRegister::System:
+            o << "System";
+            break;
+        case ProgramStatusRegister::Abort:
+            o << "Abort";
+            break;
+        case ProgramStatusRegister::Undefined:
+            o << "Undefined";
+            break;
+        case ProgramStatusRegister::Supervisor:
+            o << "Supervisor";
+            break;
+        case ProgramStatusRegister::IRQ:
+            o << "IRQ";
+            break;
+        case ProgramStatusRegister::FIQ:
+            o << "FIQ";
+            break;
+        default:
+            o << "Unknown mode!";
+            assert(!"Unknown mode");
+            break;
+    }
+
+    static const struct {
+        ProgramStatusRegister::Bit bit;
+        const char *desc;
+    } bits_desc[] = {
+        { ProgramStatusRegister::N, "N" },
+        { ProgramStatusRegister::Z, "Z" },
+        { ProgramStatusRegister::C, "C" },
+        { ProgramStatusRegister::V, "V" },
+        { ProgramStatusRegister::Q, "Q" },
+        { ProgramStatusRegister::I, "I" },
+        { ProgramStatusRegister::F, "F" },
+        { ProgramStatusRegister::T, "T" }
+    };
+    static const int bit_count = sizeof(bits_desc)/sizeof(bits_desc[0]);
+    for (int bit_ = 0; bit_ < bit_count; bit_++) {
+        if (psr.get_bit(bits_desc[bit_].bit))
+            o << " | " << bits_desc[bit_].desc;
+    }
+
+    return o;
+}

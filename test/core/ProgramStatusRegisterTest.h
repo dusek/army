@@ -10,6 +10,7 @@ public:
     CPPUNIT_TEST_SUITE(ProgramStatusRegisterTest);
     CPPUNIT_TEST(testMode);
     CPPUNIT_TEST(testBits);
+    CPPUNIT_TEST(testEqual);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -18,6 +19,8 @@ public:
 
     void testMode();
     void testBits();
+    void testEqual();
+
 private:
     ProgramStatusRegister *psr_;
 };

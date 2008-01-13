@@ -1,6 +1,8 @@
 #ifndef ARMY_CORE_PROGRAM_STATUS_REGISTER_H
 #define ARMY_CORE_PROGRAM_STATUS_REGISTER_H
 
+#include <ostream>
+
 #include "armyconfig.h"
 
 class ARMYCORE_EXPORT ProgramStatusRegister {
@@ -40,5 +42,7 @@ private:
     ARM_Word value_;
     Mode cached_mode_;
 };
+
+ARMYCORE_EXPORT std::ostream &operator<<(std::ostream &o, ProgramStatusRegister psr);
 
 #endif

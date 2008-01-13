@@ -84,3 +84,52 @@ void ProgramStatusRegisterTest::testBits()
         CPPUNIT_ASSERT_EQUAL(mode, psr_->get_mode());
     }
 }
+
+void ProgramStatusRegisterTest::testEqual() {
+    ProgramStatusRegister r1;
+    ProgramStatusRegister r2;
+    //test default-constructed values are equal
+    CPPUNIT_ASSERT_EQUAL(r1, r2);
+
+    //test assignment operator with modified mode
+    r1.set_mode(ProgramStatusRegister::System);
+    r2 = r1;
+    CPPUNIT_ASSERT_EQUAL(r1, r2);
+
+    //test assignment operator with modified bits
+    r1.set_bit(ProgramStatusRegister::N, true);
+    r1.set_bit(ProgramStatusRegister::Z, false);
+    r2 = r1;
+    CPPUNIT_ASSERT_EQUAL(r1, r2);
+
+    //test PSRs created directly (without assignment operator) with
+    //same operations to be equal
+    ProgramStatusRegister r3;
+    ProgramStatusRegister r4;
+
+    r3.set_mode(ProgramStatusRegister::Supervisor);
+    r4.set_mode(ProgramStatusRegister::Supervisor);
+
+    r3.set_bit(ProgramStatusRegister::I, true);
+    r4.set_bit(ProgramStatusRegister::I, true);
+    r3.set_bit(ProgramStatusRegister::N, false);
+    r4.set_bit(ProgramStatusRegister::N, false);
+    CPPUNIT_ASSERT_EQUAL(r3, r4);
+
+    //save the r3 value for which r3 == r4
+    ProgramStatusRegister r5 = r3;
+
+    //test that modifying a bit results in non-equality
+    r3.set_bit(ProgramStatusRegister::I, false);
+    CPPUNIT_ASSERT(!(r3==r4));
+
+    //restore r3 value
+    r3 = r5;
+    //test that modifying a mode results in non-equality
+    r3.set_mode(ProgramStatusRegister::FIQ);
+    CPPUNIT_ASSERT(!(r3==r4));
+
+    //test that modifying both results in non-equality
+    r3.set_bit(ProgramStatusRegister::I, false);
+    CPPUNIT_ASSERT(!(r3==r4));
+}
