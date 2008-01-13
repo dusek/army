@@ -13,4 +13,9 @@
 #   define ARMYCORE_EXPORT
 #endif
 
+#include "platform/pstdint.h"
+
+typedef uint32_t ARM_Word;
+typedef uint32_t addr_t;
+
 #endif

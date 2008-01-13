@@ -173,6 +173,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\core\CPURegisters.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\loader\ELFLoader.cpp"
 				>
 			</File>
@@ -197,7 +201,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\core\ProgramStatusRegister.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\instructions\RegisterArgument.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\core\RuntimeException.cpp"
 				>
 			</File>
 			<File
@@ -235,6 +247,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\core\CPURegisters.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\memory\DecoratorMemory.h"
 				>
 			</File>
@@ -248,6 +264,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\core\Enum.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\core\Exception.h"
 				>
 			</File>
 			<File
@@ -275,11 +295,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\core\ProgramStatusRegister.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\platform\pstdint.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\instructions\RegisterArgument.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\core\RuntimeException.h"
 				>
 			</File>
 			<File

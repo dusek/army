@@ -219,6 +219,26 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 		</Filter>
+		<Filter
+			Name="core"
+			>
+			<File
+				RelativePath="..\..\..\test\core\CPURegistersTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\test\core\CPURegistersTest.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\test\core\ProgramStatusRegisterTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\test\core\ProgramStatusRegisterTest.h"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

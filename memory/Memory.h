@@ -5,8 +5,6 @@
 #include "armyconfig.h"
 #include "platform/pstdint.h"
 
-typedef uint32_t addr_t;
-
 class ARMYCORE_EXPORT Memory
 {
 public:
