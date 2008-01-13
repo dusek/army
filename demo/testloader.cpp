@@ -21,7 +21,6 @@ int main (int argc, char *argv[]) {
 
     delete mem;
     delete loader;
-    storage.close();
     exe.close();
     
     return 0;
