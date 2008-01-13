@@ -9,10 +9,17 @@ public:
 protected:
     void output_details(std::ostream &o) const {
         o << "Attempt to access SPSR in ";
-        if (mode == ProgramStatusRegister::User)
-            o << "User";
-        else
-            o << "System";
+        switch(mode) {
+            case ProgramStatusRegister::User:
+                o << "User";
+                break;
+            case ProgramStatusRegister::System:
+                o << "System";
+                break;
+            default:
+                assert(!"Mode not User or System in SPSR access exception.");
+                break;
+        }
         o << " mode. Results of this are defined as UNPREDICTABLE." << std::endl;
     };
 };
