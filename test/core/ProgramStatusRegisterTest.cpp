@@ -1,3 +1,5 @@
+#include <cassert>
+
 #include "test/core/ProgramStatusRegisterTest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(ProgramStatusRegisterTest);
@@ -42,18 +44,62 @@ void ProgramStatusRegisterTest::testMode()
 
     const int mode_count = sizeof(modes)/sizeof(modes[0]);
 
-    //for each mode, set the mode and then get it and compare to the set mode
-    for (int i = 0; i < mode_count; i++) {
-        ProgramStatusRegister::Mode mode = modes[i];
-        psr_->set_mode(mode);
-        CPPUNIT_ASSERT_EQUAL(mode, psr_->get_mode());
-        //also test that setting mode did not change other bits
-        for (int bit_ = 0; bit_ < bit_count; bit_++) {
-            //FIXME this assumes that default constructor sets all bits to 0
-            //(and that setUp() uses default constructor and nothing else)
-            //it's true at this moment, but might change in the future
-            //(e.g. if I find non-zero default values in ARM documentation)
-            CPPUNIT_ASSERT_EQUAL(psr_->get_bit(bits[bit_]), false);
+    for (int k = 0; k < 3; k++) {
+        switch(k) {
+            case 0:
+                for (int bit_ = 0; bit_ < bit_count; bit_++) {
+                    psr_->set_bit(bits[bit_], true);
+                }
+                break;
+            case 1:
+                for (int bit_ = 0; bit_ < bit_count; bit_++) {
+                    psr_->set_bit(bits[bit_], false);
+                }
+                break;
+            case 2:
+                psr_->set_bit(ProgramStatusRegister::C, true);
+                psr_->set_bit(ProgramStatusRegister::T, true);
+                psr_->set_bit(ProgramStatusRegister::N, true);
+                break;
+            default:
+                assert(!"Unhandled case");
+                break;
+        }
+        //for each mode, set the mode and then get it and compare to the set mode
+        for (int i = 0; i < mode_count; i++) {
+            ProgramStatusRegister::Mode mode = modes[i];
+            psr_->set_mode(mode);
+            CPPUNIT_ASSERT_EQUAL(mode, psr_->get_mode());
+
+            //also test that setting mode did not change other bits
+            for (int bit_ = 0; bit_ < bit_count; bit_++) {
+                ProgramStatusRegister::Bit bit = bits[bit_];
+                bool expected = true;
+                switch(k) {
+                case 0:
+                    expected = true;
+                    break;
+                case 1:
+                    expected = false;
+                    break;
+                case 2:
+                    if (bit == ProgramStatusRegister::C
+                     || bit == ProgramStatusRegister::T
+                     || bit == ProgramStatusRegister::N)
+                    {
+                        expected = true;
+                    }
+                    else
+                    {
+                        expected = false;
+                    }
+                    break;
+                default:
+                    assert(!"Unhandled case");
+                    break;
+                }
+                CPPUNIT_ASSERT_EQUAL(expected, psr_->get_bit(bit));
+            }
         }
     }
 }
