@@ -12,6 +12,44 @@ static const ARM_Word mode_to_int[] = {
     0x1f
 };
 
+/*FIXME
+ * The following declaration is awful copy-and-paste
+ * (present in ProgramStatusRegisterTest and CPURegistersTest as well).
+ * Full and clean solution is to use some smart enum template that would allow
+ * iteration over enum values, etc.
+ *
+ * What the enum would do?
+ *  1. iteration over enum values (in const_iterator STL style)
+ *  2. operator<<(std::ostream &, enum ...)
+ *  3. help description (short and long; useful for GUIs); these would be marked
+ *       as translatable
+ *  4. Associate a real value with each enum value; maybe even a pair of values
+ *       - what about int and string?
+ *
+ * This probably can't be done cleanly in C++ even with preprocessor
+ * (cleanly means without duplication, or, write the enum compactly).
+ *
+ * Also a monolithic vs. backwards-compatible?
+ *  x monolithic - enum value would be class and would have methods;
+ *                 there would be no standard enum declaration
+ *  x backwards-cpt - declare enum as usual, but for each enum, implement
+ *                    a set of functions (or a class with set of static methods)
+ *                    that provide the needed additional services
+ */
+static const ProgramStatusRegister::Bit bits[] = {
+    ProgramStatusRegister::N,
+    ProgramStatusRegister::Z,
+    ProgramStatusRegister::C,
+    ProgramStatusRegister::V,
+    ProgramStatusRegister::Q,
+    ProgramStatusRegister::F,
+    ProgramStatusRegister::I,
+    ProgramStatusRegister::T
+};
+
+static const int bit_count = sizeof(bits)/sizeof(bits[0]);
+
+
 ProgramStatusRegister::ProgramStatusRegister()
 : value_(mode_to_int[User]),
   cached_mode_(User)
@@ -57,7 +95,20 @@ bool ProgramStatusRegister::operator==(const ProgramStatusRegister &other) const
 
 std::ostream &operator<<(std::ostream &o, ProgramStatusRegister psr)
 {
-    ProgramStatusRegister::Mode mode = psr.get_mode();
+    o << psr.get_mode();
+
+    for (int bit_ = 0; bit_ < bit_count; bit_++) {
+        ProgramStatusRegister::Bit bit = bits[bit_];
+        bool set = psr.get_bit(bit);
+        if (set)
+            o << " | " << bit;
+    }
+
+    return o;
+}
+
+std::ostream &operator<<(std::ostream &o, ProgramStatusRegister::Mode mode)
+{
     switch(mode) {
         case ProgramStatusRegister::User:
             o << "User";
@@ -86,23 +137,40 @@ std::ostream &operator<<(std::ostream &o, ProgramStatusRegister psr)
             break;
     }
 
-    static const struct {
-        ProgramStatusRegister::Bit bit;
-        const char *desc;
-    } bits_desc[] = {
-        { ProgramStatusRegister::N, "N" },
-        { ProgramStatusRegister::Z, "Z" },
-        { ProgramStatusRegister::C, "C" },
-        { ProgramStatusRegister::V, "V" },
-        { ProgramStatusRegister::Q, "Q" },
-        { ProgramStatusRegister::I, "I" },
-        { ProgramStatusRegister::F, "F" },
-        { ProgramStatusRegister::T, "T" }
-    };
-    static const int bit_count = sizeof(bits_desc)/sizeof(bits_desc[0]);
-    for (int bit_ = 0; bit_ < bit_count; bit_++) {
-        if (psr.get_bit(bits_desc[bit_].bit))
-            o << " | " << bits_desc[bit_].desc;
+    return o;
+}
+
+std::ostream &operator<<(std::ostream &o, ProgramStatusRegister::Bit bit)
+{
+    switch(bit) {
+        case ProgramStatusRegister::N:
+            o << "N";
+            break;
+        case ProgramStatusRegister::Z:
+            o << "Z";
+            break;
+        case ProgramStatusRegister::C:
+            o << "C";
+            break;
+        case ProgramStatusRegister::V:
+            o << "V";
+            break;
+        case ProgramStatusRegister::Q:
+            o << "Q";
+            break;
+        case ProgramStatusRegister::F:
+            o << "F";
+            break;
+        case ProgramStatusRegister::I:
+            o << "I";
+            break;
+        case ProgramStatusRegister::T:
+            o << "T";
+            break;
+        default:
+            o << "Uknown mode!";
+            assert(!"Unknown mode.");
+            break;
     }
 
     return o;

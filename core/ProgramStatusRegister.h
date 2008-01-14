@@ -43,6 +43,8 @@ private:
     Mode cached_mode_;
 };
 
+ARMYCORE_EXPORT std::ostream &operator<<(std::ostream &o, ProgramStatusRegister::Bit bit);
+ARMYCORE_EXPORT std::ostream &operator<<(std::ostream &o, ProgramStatusRegister::Mode mode);
 ARMYCORE_EXPORT std::ostream &operator<<(std::ostream &o, ProgramStatusRegister psr);
 
 #endif
