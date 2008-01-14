@@ -4,6 +4,30 @@
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CPURegistersTest);
 
+static const ProgramStatusRegister::Mode modes[] = {
+    ProgramStatusRegister::User,
+    ProgramStatusRegister::System,
+    ProgramStatusRegister::Abort,
+    ProgramStatusRegister::Undefined,
+    ProgramStatusRegister::Supervisor,
+    ProgramStatusRegister::IRQ,
+    ProgramStatusRegister::FIQ
+};
+
+static const ProgramStatusRegister::Bit bits[] = {
+    ProgramStatusRegister::N,
+    ProgramStatusRegister::Z,
+    ProgramStatusRegister::C,
+    ProgramStatusRegister::V,
+    ProgramStatusRegister::Q,
+    ProgramStatusRegister::F,
+    ProgramStatusRegister::I,
+    ProgramStatusRegister::T
+};
+
+static const int mode_count = sizeof(modes)/sizeof(modes[0]);
+static const int bit_count = sizeof(bits)/sizeof(bits[0]);
+
 void CPURegistersTest::setUp() {
     regs_ = new CPURegisters();
 
@@ -18,17 +42,7 @@ void CPURegistersTest::tearDown() {
 }
 
 void CPURegistersTest::testRegs() {
-    const ProgramStatusRegister::Mode modes[] = {
-        ProgramStatusRegister::User,
-        ProgramStatusRegister::System,
-        ProgramStatusRegister::Abort,
-        ProgramStatusRegister::Undefined,
-        ProgramStatusRegister::Supervisor,
-        ProgramStatusRegister::IRQ,
-        ProgramStatusRegister::FIQ
-    };
 
-    const int mode_count = sizeof(modes)/sizeof(modes[0]);
 
     for (int i = 0; i < mode_count; i++) {
         ProgramStatusRegister::Mode mode = modes[i];
@@ -163,6 +177,55 @@ void CPURegistersTest::testRegs() {
                 assert(!"Unknown mode");
                 break;
             }
+        }
+    }
+}
+
+static bool set_bit(int mode, int bit)
+{
+    return (((mode - bit) % 2) == 0);
+}
+
+static void set_mode(CPURegisters &regs, ProgramStatusRegister::Mode mode)
+{
+    ProgramStatusRegister cpsr = regs.get_status_reg(CPURegisters::CPSR);
+    cpsr.set_mode(mode);
+    regs.set_status_reg(CPURegisters::CPSR, cpsr);
+}
+
+static void compare_psr_bits(const ProgramStatusRegister &expected, const ProgramStatusRegister &actual)
+{
+    for (int bit_ = 0; bit_ < bit_count; bit_++) {
+        ProgramStatusRegister::Bit bit = bits[bit_];
+        CPPUNIT_ASSERT_EQUAL(expected.get_bit(bit), actual.get_bit(bit));
+    }
+}
+
+/**
+ * Tests that CPSR does not change in different modes (except for the mode itself)
+ */
+void CPURegistersTest::testCPSR() {
+    //for each mode, set CPSR bits to per-mode-unique values and
+    //check that the bits propagated to all modes
+    for (int mode_ = 0; mode_ < mode_count; mode_++) {
+        ProgramStatusRegister::Mode mode = modes[mode_];
+        set_mode(*regs_, mode);
+        //prepare a per-mode unique CPSR-bits value
+        ProgramStatusRegister psr = regs_->get_status_reg(CPURegisters::CPSR);
+        for (int bit_ = 0; bit_ < bit_count; bit_++) {
+            ProgramStatusRegister::Bit bit = bits[bit_];
+            psr.set_bit(bit, set_bit(mode_, bit_));
+        }
+        //set the value
+        regs_->set_status_reg(CPURegisters::CPSR, psr);
+        //see that in every mode, the value of bits is as in psr
+        for (int mode2_ = 0; mode2_ < mode_count; mode2_++) {
+            //change mode
+            ProgramStatusRegister::Mode mode2 = modes[mode2_];
+            set_mode(*regs_, mode2);
+            //get the mode's CPSR
+            ProgramStatusRegister actual_cpsr = regs_->get_status_reg(CPURegisters::CPSR);
+            compare_psr_bits(psr, actual_cpsr);
         }
     }
 }
