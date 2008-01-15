@@ -10,6 +10,7 @@ public:
     CPPUNIT_TEST_SUITE(CPURegistersTest);
     CPPUNIT_TEST(testRegs);
     CPPUNIT_TEST(testCPSR);
+    CPPUNIT_TEST(testSPSR);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -18,6 +19,7 @@ public:
 
     void testRegs();
     void testCPSR();
+    void testSPSR();
 
 private:
     CPURegisters *regs_;

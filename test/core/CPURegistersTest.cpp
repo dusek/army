@@ -1,4 +1,5 @@
 #include <cassert>
+#include <map>
 
 #include "test/core/CPURegistersTest.h"
 
@@ -226,6 +227,78 @@ void CPURegistersTest::testCPSR() {
             //get the mode's CPSR
             ProgramStatusRegister actual_cpsr = regs_->get_status_reg(CPURegisters::CPSR);
             compare_psr_bits(psr, actual_cpsr);
+        }
+    }
+}
+
+/**
+ * Test that User and System mode do not have SPSR and that access to them
+ * in these modes leads to RuntimeException.
+ * Further, test that each of the remaining modes has a separate SPSR.
+ */
+typedef std::map<ProgramStatusRegister::Mode, ProgramStatusRegister> PSRMap;
+void CPURegistersTest::testSPSR() {
+    //prepare testing values
+    PSRMap spsr_regs;
+    for (int mode_ = 0; mode_ < mode_count; mode_++) {
+        ProgramStatusRegister::Mode mode = modes[mode_];
+        if (mode == ProgramStatusRegister::User || mode == ProgramStatusRegister::System)
+            //these modes do not have SPSR
+            continue;
+
+        //to enhance test, don't save current mode's mode in SPSR, but a different
+        //value - might detect that changing CPSR affects SPSR (which it should not)
+        const int spsr_mode_shift = 2;
+        ProgramStatusRegister::Mode saved_mode = modes[(mode_ + spsr_mode_shift) % mode_count];
+        ProgramStatusRegister saved_spsr;
+        saved_spsr.set_mode(saved_mode);
+        for (int bit_ = 0; bit_ < bit_count; bit_++) {
+            ProgramStatusRegister::Bit bit = bits[bit_];
+            saved_spsr.set_bit(bit, set_bit(mode_ + spsr_mode_shift, bit_));
+        }
+        spsr_regs[mode] = saved_spsr;
+        //and now save the value to the appropriate mode's SPSR
+        set_mode(*regs_, mode);
+        CPPUNIT_ASSERT_NO_THROW(regs_->set_status_reg(CPURegisters::SPSR, saved_spsr));
+        CPPUNIT_ASSERT_NO_THROW(regs_->get_status_reg(CPURegisters::SPSR));
+    }
+
+    ProgramStatusRegister cpsr = regs_->get_status_reg(CPURegisters::CPSR);
+    cpsr.set_bit(ProgramStatusRegister::N);
+    cpsr.set_bit(ProgramStatusRegister::F);
+    regs_->set_status_reg(CPURegisters::CPSR, cpsr);
+    //for each mode
+    for (int mode_ = 0; mode_ < mode_count; mode_++) {
+        ProgramStatusRegister::Mode mode = modes[mode_];
+        set_mode(*regs_, mode);
+
+        if (mode == ProgramStatusRegister::User || mode == ProgramStatusRegister::System) {
+            CPPUNIT_ASSERT_THROW(regs_->set_status_reg(CPURegisters::SPSR, ProgramStatusRegister()), RuntimeException);
+            CPPUNIT_ASSERT_THROW(regs_->get_status_reg(CPURegisters::SPSR), RuntimeException);
+            continue;
+        }
+
+        ProgramStatusRegister spsr_saved = spsr_regs[mode];
+        regs_->set_status_reg(CPURegisters::SPSR, spsr_saved);
+        ProgramStatusRegister cpsr_actual = regs_->get_status_reg(CPURegisters::CPSR);
+        compare_psr_bits(cpsr, cpsr_actual);
+
+        //check that set_status_reg above did not overwrite other mode's SPSR
+        for (int mode2_ = 0; mode2_ < mode_count; mode2_++) {
+            ProgramStatusRegister::Mode mode2 = modes[mode2_];
+            set_mode(*regs_, mode2);
+            cpsr.set_mode(mode2);
+            CPPUNIT_ASSERT_EQUAL(cpsr, regs_->get_status_reg(CPURegisters::CPSR));
+
+            if (mode2 == ProgramStatusRegister::User || mode2 == ProgramStatusRegister::System) {
+                CPPUNIT_ASSERT_THROW(regs_->set_status_reg(CPURegisters::SPSR, ProgramStatusRegister()), RuntimeException);
+                CPPUNIT_ASSERT_THROW(regs_->get_status_reg(CPURegisters::SPSR), RuntimeException);
+                continue;
+            }
+
+            ProgramStatusRegister spsr_actual = regs_->get_status_reg(CPURegisters::SPSR);
+            ProgramStatusRegister spsr_saved2 = spsr_regs[mode2];
+            CPPUNIT_ASSERT_EQUAL(spsr_saved2, spsr_actual);
         }
     }
 }

@@ -139,7 +139,7 @@ public:
     RealSavedStatusRegister get_saved_status_reg_index() {
         ProgramStatusRegister::Mode mode = cpsr.get_mode();
         if (mode == ProgramStatusRegister::User ||
-            mode != ProgramStatusRegister::System)
+            mode == ProgramStatusRegister::System)
         {
             SPSRNotAvailableException e;
             e.mode = mode;
