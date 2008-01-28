@@ -21,4 +21,11 @@
 typedef uint32_t ARM_Word;
 typedef uint32_t addr_t;
 
+enum Endianness {
+    LittleEndian,
+    BigEndian
+};
+
+#define runtime_platform_endianness LittleEndian
+
 #endif

@@ -11,6 +11,7 @@ SET(CORE_SRCS
     memory/StreamMemory.cpp
     memory/PagedMemory.cpp
     memory/CollectionMemory.cpp
+    memory/EndianMemory.cpp
     loader/ELFLoader.cpp
     core/ProgramStatusRegister.cpp
     core/CPURegisters.cpp
@@ -29,6 +30,7 @@ ADD_EXECUTABLE(armytest
     test/memory/MemoryTest.cpp
     test/memory/StreamMemoryTest.cpp
     test/memory/PagedMemoryTest.cpp
+    test/memory/EndianMemoryTest.cpp
     test/core/ProgramStatusRegisterTest.cpp
     test/core/CPURegistersTest.cpp
     )

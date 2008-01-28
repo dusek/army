@@ -1,24 +1,30 @@
-#ifndef __ENDIAN_MEMORY_H__
-#define __ENDIAN_MEMORY_H__
+#ifndef ARMY_MEMORY_ENDIAN_MEMORY_H__
+#define ARMY_MEMORY_ENDIAN_MEMORY_H__
 
 #include "armyconfig.h"
 #include "memory/DecoratorMemory.h"
 
-class ARMYCORE_EXPORT EndianMemory: public DecoratorMemory {
+class ARMYCORE_EXPORT EndianMemory {
 public:
-    enum Endianness {
-        LittleEndian,
-        BigEndian
+    enum Size {
+        Word = 4,
+        Halfword = 2,
+        Byte = 1
     };
-    EndianMemory(Memory *engine, Endianness end);
-    std::string read(addr_t addr, size_t bytes);
-    void       write(addr_t addr, const std::string &data);
 
-    int   read(addr_t addr, size_t bytes = 4, bool signed_ = false);
-    void write(addr_t addr, int value, size_t bytes = 4, bool signed_ = false);
+    enum Signedness {
+        Signed,
+        Unsigned
+    };
+
+    EndianMemory(Memory *engine, Endianness end);
+
+    ARM_Word   read_value (addr_t addr, Size size = Word, Signedness signedness = Unsigned);
+    void       write_value(addr_t addr, ARM_Word value, Size size = Word);
 
 private:
-    Endianness endianness;
+    Endianness endianness_;
+    Memory *engine;
 };
 
 #endif

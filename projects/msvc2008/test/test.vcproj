@@ -87,6 +87,7 @@
 				Name="VCPostBuildEventTool"
 				Description="Unit testing..."
 				CommandLine="&quot;$(TargetPath)&quot;"
+				ExcludedFromBuild="true"
 			/>
 		</Configuration>
 		<Configuration
@@ -180,6 +181,14 @@
 		<Filter
 			Name="memory"
 			>
+			<File
+				RelativePath="..\..\..\test\memory\EndianMemoryTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\test\memory\EndianMemoryTest.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\..\test\memory\File.cpp"
 				>
