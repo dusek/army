@@ -13,9 +13,13 @@ SET(CORE_SRCS
     memory/CollectionMemory.cpp
     memory/EndianMemory.cpp
     loader/ELFLoader.cpp
+    core/CPU.cpp
+    core/DecodingInstructionDecoder.cpp
+    core/InstructionDecoder.cpp
     core/ProgramStatusRegister.cpp
     core/CPURegisters.cpp
     core/RuntimeException.cpp
+    instructions/Instruction.cpp
     )
 ADD_LIBRARY(armycore SHARED ${CORE_SRCS})
 SET_TARGET_PROPERTIES(armycore PROPERTIES

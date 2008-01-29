@@ -173,7 +173,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\core\CPU.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\core\CPURegisters.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\core\DecodingInstructionDecoder.cpp"
 				>
 			</File>
 			<File
@@ -182,6 +190,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\memory\EndianMemory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\Instruction.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\core\InstructionDecoder.cpp"
 				>
 			</File>
 			<File
@@ -219,7 +235,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\core\CPU.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\core\CPURegisters.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\core\DecodingInstructionDecoder.h"
 				>
 			</File>
 			<File
@@ -240,6 +264,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\loader\ExecutableLoader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\Instruction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\core\InstructionDecoder.h"
 				>
 			</File>
 			<File
