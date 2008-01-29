@@ -3,8 +3,8 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="army"
-	OutputDirectory="$(PrefixBin)\$(ConfigurationName)"
-	IntermediateDirectory="$(PrefixBin)\.libs\$(ConfigurationName)\$(ProjectName)"
+	OutputDirectory="$(PrefixBinOut)\$(ConfigurationName)"
+	IntermediateDirectory="$(PrefixBinInt)\.libs\$(ConfigurationName)\$(ProjectName)"
 	>
 	<Tool
 		Name="VCBscMakeTool"
@@ -32,5 +32,13 @@
 	<UserMacro
 		Name="PrefixSrc"
 		Value="$(Prefix)\src"
+	/>
+	<UserMacro
+		Name="PrefixBinInt"
+		Value="$(PrefixBin)"
+	/>
+	<UserMacro
+		Name="PrefixBinOut"
+		Value="$(PrefixBin)"
 	/>
 </VisualStudioPropertySheet>
