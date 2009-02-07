@@ -124,7 +124,7 @@ bool ELFLoader::load(std::istream &executable, Memory *memory, addr_t& load_addr
             buf = new char[ph_entry.p_filesz];
             executable.read(buf, ph_entry.p_filesz);
             data.assign(buf, ph_entry.p_filesz);
-            delete buf;
+            delete[] buf;
             memory->write(ph_entry.p_vaddr, data);
             executable.seekg(pos);
             executable.seekg(elf_header.e_phentsize - sizeof(ph_entry), std::ios_base::cur);
