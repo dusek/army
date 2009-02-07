@@ -59,7 +59,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cppunitd.lib"
+				AdditionalDependencies="cppunitd_dll.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -133,7 +133,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="cppunit.lib"
+				AdditionalDependencies="cppunit_dll.lib"
 				LinkIncremental="1"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -173,6 +173,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath="..\..\..\test\loader\ELFLoaderTest.cpp"
+				>
+			</File>
 			<File
 				RelativePath="..\..\..\test\Run.cpp"
 				>
@@ -245,6 +249,22 @@
 			</File>
 			<File
 				RelativePath="..\..\..\test\core\ProgramStatusRegisterTest.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="loader"
+			>
+			<File
+				RelativePath="..\..\..\test\loader\ELFLoaderTest.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\test\loader\TestExecutables.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\test\loader\TestExecutables.h"
 				>
 			</File>
 		</Filter>

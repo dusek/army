@@ -77,21 +77,21 @@ enum {
     PT_PHDR
 };
 
-ELFLoader::ELFLoader(std::iostream *executable):
-    ExecutableLoader(executable)
-{}
-
-addr_t ELFLoader::load(Memory *memory)
+bool ELFLoader::load(std::istream &executable, Memory *memory, addr_t& load_addr)
 {
     Elf32_Ehdr elf_header;
-    executable->seekg(0);
-    executable->read((char *)&elf_header, sizeof(elf_header));
+    executable.seekg(0);
+    // this is awful and incorrect, but works on the compilers+platforms I tested
+    // this will not work, I suppose, e.g. on some 64-bit platforms
+    executable.read((char *)&elf_header, sizeof(elf_header));
 
     // Check ELF magic
-    assert(elf_header.e_ident[0] == 0x7f);
-    assert(elf_header.e_ident[1] == 'E');
-    assert(elf_header.e_ident[2] == 'L');
-    assert(elf_header.e_ident[3] == 'F');
+    if ((elf_header.e_ident[0] != 0x7f) ||
+        (elf_header.e_ident[1] != 'E')  ||
+        (elf_header.e_ident[2] != 'L')  ||
+        (elf_header.e_ident[3] != 'F')
+        )
+        return false;
     
     // Check endianness
     assert(elf_header.e_ident[EI_DATA] == ELFDATA2LSB);
@@ -111,24 +111,25 @@ addr_t ELFLoader::load(Memory *memory)
     std::string data;
     char *buf;
     
-    executable->seekg(elf_header.e_phoff);
+    executable.seekg(elf_header.e_phoff);
     
     // Iterate over program header entries, load loadable segments
     for (ph_entries = 0; ph_entries < elf_header.e_phnum; ph_entries++) {
-        executable->read((char *)&ph_entry, sizeof(ph_entry));
+        executable.read((char *)&ph_entry, sizeof(ph_entry));
         if ((ph_entry.p_type == PT_LOAD) && (ph_entry.p_memsz > 0)) {
             assert(ph_entry.p_filesz > 0);
             // We must load something to memory
-            pos = executable->tellg();
-            executable->seekg(ph_entry.p_offset);
+            pos = executable.tellg();
+            executable.seekg(ph_entry.p_offset);
             buf = new char[ph_entry.p_filesz];
-            executable->read(buf, ph_entry.p_filesz);
+            executable.read(buf, ph_entry.p_filesz);
             data.assign(buf, ph_entry.p_filesz);
             delete buf;
             memory->write(ph_entry.p_vaddr, data);
-            executable->seekg(pos);
-            executable->seekg(elf_header.e_phentsize - sizeof(ph_entry), std::ios_base::cur);
+            executable.seekg(pos);
+            executable.seekg(elf_header.e_phentsize - sizeof(ph_entry), std::ios_base::cur);
         }
     }
-    return elf_header.e_entry;
+    load_addr = elf_header.e_entry;
+    return true;
 }

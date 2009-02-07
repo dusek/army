@@ -3,10 +3,10 @@
 
 #include "ExecutableLoader.h"
 
-class ELFLoader: public ExecutableLoader {
+class ARMYCORE_EXPORT ELFLoader: public ExecutableLoader {
 public:
-    ELFLoader(std::iostream *executable);
-    addr_t load(Memory *memory);
+	ELFLoader() {};
+	virtual bool load(std::istream &executable, Memory *memory, addr_t& addr);
     ~ELFLoader() {};
 };
 
