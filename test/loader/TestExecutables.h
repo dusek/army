@@ -11,11 +11,12 @@
  */
 
 struct Segment {
-    Segment(addr_t vm_start_, addr_t fl_start_, std::size_t size_);
+    Segment(addr_t vm_start_, addr_t fl_start_, std::size_t size_, int prot_);
 
     addr_t vm_start; // start in virtual memory
     addr_t fl_start; // start in file
     std::size_t size;
+    int prot;
 };
 
 struct ELFTestExecutable {

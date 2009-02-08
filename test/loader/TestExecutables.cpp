@@ -6,11 +6,12 @@
 
 #include "test/loader/TestExecutables.h"
 
-Segment::Segment(addr_t vm_start_, addr_t fl_start_, std::size_t size_)
+Segment::Segment(addr_t vm_start_, addr_t fl_start_, std::size_t size_, int prot_)
 :
 vm_start(vm_start_),
 fl_start(fl_start_),
-size(size_)
+size(size_),
+prot(prot_)
 {}
 
 /**
@@ -27,7 +28,7 @@ ELFTestExecutable::ELFTestExecutable()
 ELFTestExecutable_Fibonacci::ELFTestExecutable_Fibonacci()
 {
     entry_point = 0x8000;
-    segments.push_back(Segment(0x8000, 0x8000, 0x34));
+    segments.push_back(Segment(0x8000, 0x8000, 0x34, Memory::Execute | Memory::Read));
     const char prolog[] =
         "\x7f\x45\x4c\x46\x01\x01\x01\x61\x00\x00\x00\x00\x00\x00\x00\x00"
         "\x02\x00\x28\x00\x01\x00\x00\x00\x00\x80\x00\x00\x34\x00\x00\x00"
@@ -79,7 +80,7 @@ Program Headers:
 ELFTestExecutable_Prec::ELFTestExecutable_Prec()
 {
     entry_point = 0x81bc;
-    segments.push_back(Segment(0x8000, 0x8000, 0x05dc));
+    segments.push_back(Segment(0x8000, 0x8000, 0x05dc, Memory::Execute | Memory::Read));
     const char part_0[] =
         "\x7f\x45\x4c\x46\x01\x01\x01\x61\x04\x00\x00\x00\x03\x00\x00\x00" 
         "\x02\x00\x28\x00\x01\x00\x00\x00\xbc\x81\x00\x00\x34\x00\x00\x00" 
@@ -391,6 +392,8 @@ struct segment_checker : public std::unary_function<const Segment&, void>
         std::pair<std::string::const_iterator, std::string::const_iterator> comparison = 
             std::mismatch(it, it_end, actual_contents.begin());
         CPPUNIT_ASSERT(comparison.first == it_end);
+        CPPUNIT_ASSERT_EQUAL(segm.prot, mem_.get_protect(segm.vm_start));
+        CPPUNIT_ASSERT_EQUAL(segm.prot, mem_.get_protect(segm.vm_start + segm.size - 1));
     }
 private:
     segment_checker& operator=(const segment_checker&);

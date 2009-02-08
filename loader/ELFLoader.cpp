@@ -77,6 +77,26 @@ enum {
     PT_PHDR
 };
 
+enum {
+    PF_X = 0x1,
+    PF_W = 0x2,
+    PF_R = 0x4
+};
+
+static int get_prot_for_ELF_pflags(int pflags)
+{
+    int ret = Memory::None;
+
+    if (pflags & PF_X)
+        ret |= Memory::Execute;
+    if (pflags & PF_W)
+        ret |= Memory::Write;
+    if (pflags & PF_R)
+        ret |= Memory::Read;
+
+    return ret;
+}
+
 bool ELFLoader::load(std::istream &executable, Memory *memory, addr_t& load_addr)
 {
     Elf32_Ehdr elf_header;
@@ -125,7 +145,16 @@ bool ELFLoader::load(std::istream &executable, Memory *memory, addr_t& load_addr
             executable.read(buf, ph_entry.p_filesz);
             data.assign(buf, ph_entry.p_filesz);
             delete[] buf;
-            memory->write(ph_entry.p_vaddr, data);
+            const addr_t load_addr = ph_entry.p_vaddr;
+            const std::size_t load_size = ph_entry.p_memsz;
+            const int prot = get_prot_for_ELF_pflags(ph_entry.p_flags);
+            const bool prot_nowrite = ((prot & Memory::Write) == 0);
+            // We need write perm on the pages for the act of loading the executable
+            memory->alloc_protect(load_addr, load_size, prot | Memory::Write);
+            memory->write(load_addr, data);
+            // If we added write perm above when pages should not have it, remove write perm now
+            if (prot_nowrite)
+                memory->alloc_protect(load_addr, load_size, prot);
             executable.seekg(pos);
             executable.seekg(elf_header.e_phentsize - sizeof(ph_entry), std::ios_base::cur);
         }
