@@ -12,6 +12,7 @@ SET(CORE_SRCS
     memory/PagedMemory.cpp
     memory/CollectionMemory.cpp
     memory/EndianMemory.cpp
+    memory/VirtualMemory.cpp
     loader/ELFLoader.cpp
     core/CPU.cpp
     core/DecodingInstructionDecoder.cpp
@@ -34,11 +35,14 @@ ADD_EXECUTABLE(armytest
     test/memory/MemoryTest.cpp
     test/memory/StreamMemoryTest.cpp
     test/memory/PagedMemoryTest.cpp
+    test/memory/VirtualMemoryTest.cpp
     test/memory/EndianMemoryTest.cpp
     test/core/ProgramStatusRegisterTest.cpp
     test/core/CPURegistersTest.cpp
+    test/loader/TestExecutables.cpp
+    test/loader/ELFLoaderTest.cpp
     )
-TARGET_LINK_LIBRARIES(armytest armycore cppunit)
+TARGET_LINK_LIBRARIES(armytest armycore ${CPPUNIT_LIBRARY})
 SET_TARGET_PROPERTIES(armytest PROPERTIES
     COMPILE_FLAGS "-Wall"
     )

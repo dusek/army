@@ -102,3 +102,13 @@ void PagedMemory::write(addr_t addr, const std::string &data)
         bytes -= left;
     }
 }
+
+void PagedMemory::alloc_protect(addr_t /*addr*/, std::size_t /*size*/, int /*protect*/)
+{
+    //no-op currently
+}
+
+int PagedMemory::get_protect(addr_t /*addr*/)
+{
+    return Memory::Read | Memory::Write | Memory::Execute;
+}

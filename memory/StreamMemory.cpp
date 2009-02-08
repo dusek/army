@@ -16,6 +16,16 @@ void StreamMemory::write(addr_t addr, const std::string &data) {
     this->stream->write(data.c_str(), data.length());
 }
 
+void StreamMemory::alloc_protect(addr_t /*addr*/, std::size_t /*size*/, int /*protect*/)
+{
+    //no-op here
+}
+
 StreamMemory::~StreamMemory() {
     delete stream;
+}
+
+int StreamMemory::get_protect(addr_t /*addr*/)
+{
+    return Memory::Read | Memory::Write | Memory::Execute;
 }

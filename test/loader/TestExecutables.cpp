@@ -394,8 +394,8 @@ struct segment_checker : public std::unary_function<const Segment&, void>
     }
 private:
     segment_checker& operator=(const segment_checker&);
-    Memory& mem_;
     const std::string& exe_;
+    Memory& mem_;
 };
 
 struct not_char : public std::unary_function<char, bool>

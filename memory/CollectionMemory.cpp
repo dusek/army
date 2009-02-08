@@ -77,3 +77,15 @@ void CollectionMemory::write(addr_t addr, const std::string &data) {
     Memory *engine = target_info.second;
     engine->write(addr, data);
 }
+
+void CollectionMemory::alloc_protect(addr_t /*addr*/, std::size_t /*size*/, int /*protect*/)
+{
+    // no-op currently
+    //TODO chaing to appropriate child memory
+}
+
+int CollectionMemory::get_protect(addr_t /*addr*/)
+{
+    //TODO chain to appropriate child memory
+    return Memory::Read | Memory::Write;
+}

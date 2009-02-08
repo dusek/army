@@ -40,6 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				PreprocessorDefinitions="_SCL_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -114,7 +115,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;CORE_EXPORTS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;CORE_EXPORTS;_SCL_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -220,6 +221,10 @@
 				RelativePath="..\..\..\instructions\util.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\memory\VirtualMemory.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -296,6 +301,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\memory\StreamMemory.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\memory\VirtualMemory.h"
 				>
 			</File>
 		</Filter>

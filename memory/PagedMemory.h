@@ -9,6 +9,8 @@ public:
     PagedMemory(Memory *engine, size_t page_size_exp = 12);
     std::string read (addr_t addr, size_t bytes);
     void   write(addr_t addr, const std::string &data);
+    void alloc_protect(addr_t addr, std::size_t, int protect);
+    virtual int get_protect(addr_t addr);
 
 protected:
     /**
