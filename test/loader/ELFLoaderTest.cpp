@@ -7,8 +7,7 @@
 
 #include "test/loader/TestExecutables.h"
 #include "loader/ELFLoader.h"
-#include "memory/StreamMemory.h"
-#include "memory/PagedMemory.h"
+#include "memory/VirtualMemory.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(ELFLoaderTest);
 
@@ -17,7 +16,7 @@ void ELFLoaderTest::testGarbage()
     ELFLoader loader;
     addr_t load_addr;
 
-    std::auto_ptr<Memory> mem(new PagedMemory(new StreamMemory(new std::stringstream)));
+    std::auto_ptr<Memory> mem(new VirtualMemory);
     std::stringstream s1("\0x7fELf");
     std::stringstream s2("\0x7fElF");
     std::stringstream s3("\0x7feLF");
@@ -34,7 +33,7 @@ void ELFLoaderTest::testLoad()
 {
     ELFLoader loader;
     addr_t entry_point;
-    std::auto_ptr<Memory> mem(new PagedMemory(new StreamMemory(new std::stringstream(std::string(0x100000, '\0')))));
+    std::auto_ptr<Memory> mem(new VirtualMemory);
     ELFTestExecutable_Fibonacci fib;
     std::stringstream elf_contents(fib.contents);
     CPPUNIT_ASSERT(loader.load(elf_contents, mem.get(), entry_point));
@@ -42,7 +41,7 @@ void ELFLoaderTest::testLoad()
     check_loaded_file(fib, *mem);
 
     entry_point = 0;
-    std::auto_ptr<Memory> mem2(new PagedMemory(new StreamMemory(new std::stringstream(std::string(0x100000, '\0')))));
+    std::auto_ptr<Memory> mem2(new VirtualMemory);
     ELFTestExecutable_Prec prec;
     std::stringstream elf_contents2(prec.contents);
     CPPUNIT_ASSERT(loader.load(elf_contents2, mem2.get(), entry_point));
