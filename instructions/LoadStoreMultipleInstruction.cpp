@@ -19,6 +19,8 @@ addr_reg_(addr)
 void LoadStoreMultipleInstruction::do_execute(CPURegisters &regs, EndianMemory &mem) const
 {
     ARM_Word addr = regs.get_reg(addr_reg_);
+    if (addr_reg_ == CPURegisters::PC)
+        addr += 8;
     ARM_Word addr_step = increment_ ? 4 : -4;
     if (!inclusive_)
         addr += addr_step;
@@ -28,8 +30,12 @@ void LoadStoreMultipleInstruction::do_execute(CPURegisters &regs, EndianMemory &
         if (reg_mask.test(i)) {
             if (trans_type_ == Load)
                 regs.set_reg(CPURegisters::Register(i), mem.read_value(addr));
-            else
-                mem.write_value(addr, regs.get_reg(CPURegisters::Register(i)));
+            else {
+                ARM_Word reg_value = regs.get_reg(CPURegisters::Register(i));
+                if (i == 15)
+                    reg_value += 8;
+                mem.write_value(addr, reg_value);
+            }
             addr += addr_step;
         }
     }

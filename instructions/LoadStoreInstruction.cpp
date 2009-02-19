@@ -26,6 +26,9 @@ void LoadStoreInstruction::do_execute(CPURegisters& regs, EndianMemory& mem) con
 {
     ARM_Word offset = offset_->load(regs, false);
     ARM_Word base = regs.get_reg(addr_reg_);
+    if (addr_reg_ == CPURegisters::PC)
+        base += 8;
+
     ARM_Word addr;
     if (!add_)
 #ifdef _MSC_VER
@@ -45,8 +48,11 @@ void LoadStoreInstruction::do_execute(CPURegisters& regs, EndianMemory& mem) con
     ARM_Word value;
     if (trans_type_ == Load)
         value = mem.read_value(addr, size_, signedness_);
-    else
+    else {
         value = regs.get_reg(dest_);
+        if (dest_ == CPURegisters::PC)
+            value += 8;
+    }
 
     if (!pre_)
         addr += offset;
