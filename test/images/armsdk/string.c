@@ -27,18 +27,19 @@ void logu32(int fd, uint32_t val)
     if (val == 0)
         write(fd, &c, 1);
     else {
-        uint32_t old_level;
-        while (level < val) {
+        uint32_t old_level = level;
+        while (level <= val) {
             old_level = level;
             level += old_level << 2;
             level += level;
         }
         level = old_level;
         while (level > 0) {
-            c = (val / level) - '0';
+            c = (val / level) + '0';
             write(fd, &c, 1);
             val %= level;
-            level %= 10;
+            level /= 10;
         }
     }
+    write(fd, "\n", 1);
 }
