@@ -192,6 +192,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\instructions\CLZInstruction.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\memory\CollectionMemory.cpp"
 				>
 			</File>
@@ -347,6 +351,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\instructions\BranchInstruction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\CLZInstruction.h"
 				>
 			</File>
 			<File

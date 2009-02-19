@@ -12,5 +12,6 @@
 #include "instructions/LoadStoreMultipleInstruction.h"
 #include "instructions/SWIInstruction.h"
 #include "instructions/MultiplyInstruction.h"
+#include "instructions/CLZInstruction.h"
 
 #endif

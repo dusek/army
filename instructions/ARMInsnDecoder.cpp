@@ -55,13 +55,16 @@ arm::Instruction *ARMInsnDecoder::fetch_decode(addr_t addr, EndianMemory &mem)
                     if (!word.test(4)) {
                         // move status register to register, move register to status register
                         std::cerr << "Not implemented instruction: move between register and status register (not usable in User mode)" << std::endl;
-                    } else if (!word.test(7)){
+                    } else { // since here holds !(word.test(4) && word.test(7) (above) and word.test(4), we have !word.test(7) here
                         // misc. insns
-                        if (!word.test(5) && !word.test(6) && !word.test(22)) {
+                        if (!word.test(5) && !word.test(6)) {
                             // BX
-                            insn = arm::is::BX(RegisterFromWord(insn_word, 0), cond_);
+                            if (!word.test(22))
+                                insn = arm::is::BX(RegisterFromWord(insn_word, 0), cond_);
+                            else
+                                insn = arm::is::CLZ(RegisterFromWord(insn_word, 12), RegisterFromWord(insn_word, 0));
                         } else {
-                            std::cerr << "Not implemented instruction: BX, BXL, CLZ, BKPT, DSP" << std::endl;
+                            std::cerr << "Not implemented instruction: BXL, BKPT, DSP" << std::endl;
                         }
                     }
                 } else {

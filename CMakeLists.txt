@@ -44,6 +44,7 @@ SET(CORE_SRCS
     instructions/LoadStoreMultipleInstruction.cpp
     instructions/SWIInstruction.cpp
     instructions/MultiplyInstruction.cpp
+    instructions/CLZInstruction.cpp
     instructions/InsnDecoder.cpp
     instructions/ARMInsnDecoder.cpp
     )
