@@ -14,7 +14,7 @@ void Fib(int argc, char **argv) {
         exit();
     }
 
-    uint32_t N = strtou32(argv[1]);
+    int N = strtou32(argv[1]);
     
     x = 1;           //MOV R1, #1
     y = 0;           //MOV R2, #0
