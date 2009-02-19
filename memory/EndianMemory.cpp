@@ -9,13 +9,11 @@
  * endianness (platform endianness = endianness of CPU on which this ARM interpreter
  * runs.
  */
-static std::string endian_swap(std::string data, Endianness memory_endianness)
+static void endian_swap(std::string& data, Endianness memory_endianness)
 {
     if (memory_endianness != runtime_platform_endianness) {
         std::reverse(data.begin(), data.end());
     }
-
-    return data;
 }
 
 EndianMemory::EndianMemory(Memory *engine, Endianness end)
@@ -29,23 +27,11 @@ endianness_(end)
 ARM_Word EndianMemory::read_value(addr_t addr, EndianMemory::Size size, EndianMemory::Signedness signedness)
 {
     std::string data = engine->read(addr, size);
-    std::string extend = std::string(sizeof(ARM_Word) - size, 0x0);
-    switch (endianness_) {
-        case BigEndian:
-            data = extend + data;
-            break;
-        case LittleEndian:
-            data = data + extend;
-            break;
-        default:
-            assert(!"Unknown endianness");
-            return 0;
-    }
-    data = endian_swap(data, endianness_);
+    if (endianness_ == BigEndian)
+        std::reverse(data.begin(), data.end());
     ARM_Word ret = 0;
-    char *c = (char *) &ret;
     for (int i = 0; i < size; i++)
-        c[i] = data[i];
+        ret |= ((unsigned char)data[i]) << 8*i;
     
     //sign-extend the value, if needed
     if (signedness == Signed) {
@@ -82,7 +68,7 @@ ARM_Word EndianMemory::read_value(addr_t addr, EndianMemory::Size size, EndianMe
 void EndianMemory::write_value(addr_t addr, ARM_Word value, EndianMemory::Size size)
 {
     std::string data((char *) &value, sizeof(ARM_Word));
-    data = endian_swap(data, endianness_);
+    endian_swap(data, endianness_);
     int start = 0;
     if (endianness_ == BigEndian)
         start = sizeof(ARM_Word) - size;
