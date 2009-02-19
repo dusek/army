@@ -21,7 +21,6 @@ SET(CORE_SRCS
     core/CPURegisters.cpp
     core/RuntimeException.cpp
     instructions/cond.cpp
-    instructions/Instruction.cpp
     instructions/Arg.cpp
     instructions/RegArg.cpp
     instructions/ImmedArg.cpp
