@@ -42,7 +42,7 @@ void SWIInstruction::do_execute(CPURegisters& regs, EndianMemory& mem) const
                 regs.set_reg(CPURegisters::R0, 0xffffffff);
             else {
                 addr_t buf = regs.get_reg(CPURegisters::R1);
-                ARM_Word size = regs.get_reg(CPURegisters::R0);
+                ARM_Word size = regs.get_reg(CPURegisters::R2);
                 if (swi_code == SYSCALL_read) {
                     std::vector<char> bufch(size);
                     regs.set_reg(CPURegisters::R0, ::fread(&bufch[0], 1, size, stdin));
