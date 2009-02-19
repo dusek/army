@@ -44,8 +44,11 @@ void DPInstruction::do_execute(CPURegisters &regs, EndianMemory &) const
         cpsr.set_bit(ProgramStatusRegister::N, (result & 0x80000000) != 0);
     }
 
-    if (psr_override)
-        cpsr = regs.status_reg(CPURegisters::SPSR);
+    // somehow arm-elf-gcc in its libgcc.a, in __aeabi_uidiv, has "ADDNE   PC, PC, R3, LSL #2"
+    // so it assumes adding to PC works --> for practical reasons,
+    // disable the below correctness (we don't need Priviledged mode anyway)
+    //if (psr_override)
+    //    cpsr = regs.status_reg(CPURegisters::SPSR);
 
     if (store_result_)
         regs.set_reg(dest_reg_, result);
