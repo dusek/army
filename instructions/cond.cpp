@@ -60,7 +60,7 @@ bool is_cond(ProgramStatusRegister& psr, Cond cond)
             break;
 
         case LE:
-            ret = psr.get_bit(ProgramStatusRegister::Z) && (psr.get_bit(ProgramStatusRegister::N) != psr.get_bit(ProgramStatusRegister::V));
+            ret = psr.get_bit(ProgramStatusRegister::Z) || (psr.get_bit(ProgramStatusRegister::N) != psr.get_bit(ProgramStatusRegister::V));
             break;
 
         case AL:
