@@ -4,7 +4,7 @@
 #include "armyconfig.h"
 #include "memory/DecoratorMemory.h"
 
-class ARMYCORE_EXPORT EndianMemory {
+class ARMYCORE_EXPORT EndianMemory : public DecoratorMemory {
 public:
     enum Size {
         Word = 4,
@@ -24,7 +24,6 @@ public:
 
 private:
     Endianness endianness_;
-    Memory *engine;
 };
 
 #endif

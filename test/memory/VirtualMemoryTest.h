@@ -9,11 +9,13 @@ class VirtualMemoryTest : public MemoryTest {
 public:
     CPPUNIT_TEST_SUB_SUITE(VirtualMemoryTest, MemoryTest);
     CPPUNIT_TEST(testAll);
+    CPPUNIT_TEST(testProtect);
     CPPUNIT_TEST_SUITE_END();
 
 public:
     void setUp();    
     void testAll();
+    void testProtect();
 };
 
 #endif

@@ -120,6 +120,10 @@ public:
     ARM_Word regs[RealRegisterCount];
     ProgramStatusRegister saved_status_regs[RealSavedStatusRegisterCount];
     ProgramStatusRegister cpsr; // CPSR = Current Program Status Register
+    bool PC_dirty_;
+    bool end_;
+
+    CPURegistersImpl() : PC_dirty_(false), end_(false){}
 
     RealRegister get_reg_index(CPURegisters::Register reg) {
         static const RealRegister reg_map[7][16] = {
@@ -181,9 +185,11 @@ ARM_Word CPURegisters::get_reg(CPURegisters::Register reg) const {
 void CPURegisters::set_reg(CPURegisters::Register reg, ARM_Word value) {
     RealRegister realReg = pimpl->get_reg_index(reg);
     pimpl->regs[realReg] = value;
+    if (reg == PC)
+        pimpl->PC_dirty_ = true;
 }
 
-ProgramStatusRegister CPURegisters::get_status_reg(CPURegisters::StatusRegister reg) const
+ProgramStatusRegister& CPURegisters::status_reg(CPURegisters::StatusRegister reg)
 {
     if (reg == CPURegisters::CPSR)
         return pimpl->cpsr;
@@ -193,12 +199,27 @@ ProgramStatusRegister CPURegisters::get_status_reg(CPURegisters::StatusRegister 
     }
 }
 
-void CPURegisters::set_status_reg(CPURegisters::StatusRegister reg, const ProgramStatusRegister &value)
+CPURegisters::Register RegisterFromWord(ARM_Word word, std::size_t pos)
 {
-    if (reg == CPURegisters::CPSR)
-        pimpl->cpsr = value;
-    else {
-        RealSavedStatusRegister realSavedReg = pimpl->get_saved_status_reg_index();
-        pimpl->saved_status_regs[realSavedReg] = value;
-    }
+    assert(pos <= 28);
+    assert(pos >= 0);
+    // move the required bits to lowest 4 bits
+    word >>= pos;
+    // zero all bits other than lowest 4
+    word &= 0x0000000f;
+    CPURegisters::Register reg = CPURegisters::Register(word);
+
+    return reg;
+}
+
+bool CPURegisters::is_PC_dirty() const
+{
+    bool ret = pimpl->PC_dirty_;
+    pimpl->PC_dirty_ = false;
+    return ret;
+}
+
+bool& CPURegisters::end()
+{
+    return pimpl->end_;
 }

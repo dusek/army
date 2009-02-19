@@ -25,3 +25,12 @@ void VirtualMemoryTest::testAll()
     //Read across a page boundary (0x0ff -> 0x5ff; 0x100 -> 0x200; 0x101 -> 0x201)
     CPPUNIT_ASSERT_EQUAL(mem->read(0x00000fff, 3), std::string("234"));
 }
+
+void VirtualMemoryTest::testProtect()
+{
+    //for (int init_prot = Memory::None; init_prot < (Memory::Read | Memory::Write | Memory::Execute); ++init_prot) {
+    //    std::auto_ptr<VirtualMemory> apm(new VirtualMemory);
+    //    VirtualMemory *pm = apm.get();
+    //    //pm->alloc_protect
+    //}
+}

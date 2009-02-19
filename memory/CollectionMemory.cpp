@@ -84,7 +84,7 @@ void CollectionMemory::alloc_protect(addr_t /*addr*/, std::size_t /*size*/, int 
     //TODO chaing to appropriate child memory
 }
 
-int CollectionMemory::get_protect(addr_t /*addr*/)
+int CollectionMemory::get_protect(addr_t /*addr*/) const
 {
     //TODO chain to appropriate child memory
     return Memory::Read | Memory::Write;

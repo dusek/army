@@ -26,7 +26,7 @@ private:
     ARM_Word insn_word_;
 };
 
-const Instruction *DecodingInstructionDecoder::fetch_and_decode(addr_t insn_addr, EndianMemory &mem)
+Instruction *DecodingInstructionDecoder::fetch_and_decode(addr_t insn_addr, EndianMemory &mem)
 {
     ARM_Word insn_word = mem.read_value(insn_addr);
     instruction_set_t::const_iterator it =
@@ -48,4 +48,9 @@ void DecodingInstructionDecoder::invalidate_cache(addr_t, addr_t)
 DecodingInstructionDecoder::~DecodingInstructionDecoder()
 {
     std::for_each(instruction_set.begin(), instruction_set.end(), InstructionDeleter);
+}
+
+void DecodingInstructionDecoder::dispose(Instruction *insn)
+{
+    delete insn;
 }

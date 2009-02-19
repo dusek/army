@@ -21,9 +21,15 @@ public:
     /**
      * Decodes instruction word from address "insn_addr",
      * and returns decoded instruction representing this word.
-     * Caller owns the instruction object (i.e., has to delete it when done)
+     * Caller does not own the object (hence "const"), and has to call "dispose"
+     * when done with it
      */
-    virtual const Instruction *fetch_and_decode(addr_t insn_addr, EndianMemory &mem) = 0;
+    virtual Instruction *fetch_and_decode(addr_t insn_addr, EndianMemory &mem) = 0;
+
+    /**
+     * This must be called after instruction is used
+     */
+    virtual void dispose(Instruction *insn) = 0;
 
     /**
      * Tells the instruction decoder that contents of memory from "addr_start"
@@ -34,6 +40,13 @@ public:
     virtual void invalidate_cache(addr_t addr_start, addr_t addr_end) = 0;
 
     virtual ~InstructionDecoder(){};
+
+protected:
+    InstructionDecoder(){};
+
+private:
+    InstructionDecoder(const InstructionDecoder &);
+    InstructionDecoder& operator=(const InstructionDecoder &);
 };
 
 #endif

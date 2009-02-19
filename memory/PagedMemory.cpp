@@ -14,9 +14,9 @@ public:
 };
 
 PagedMemory::PagedMemory(Memory *engine, size_t page_size_exp):
+DecoratorMemory(engine),
 d (new PagedMemoryImpl(page_size_exp))
 {
-    this->engine = engine;
 }
 
 std::pair<addr_t,size_t> PagedMemory::virtual_to_physical(addr_t virtual_addr, bool create_on_demand) {
@@ -108,7 +108,7 @@ void PagedMemory::alloc_protect(addr_t /*addr*/, std::size_t /*size*/, int /*pro
     //no-op currently
 }
 
-int PagedMemory::get_protect(addr_t /*addr*/)
+int PagedMemory::get_protect(addr_t /*addr*/) const
 {
     return Memory::Read | Memory::Write | Memory::Execute;
 }

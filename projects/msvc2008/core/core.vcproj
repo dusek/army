@@ -172,7 +172,35 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\..\..\instructions\Addition.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\AndInstruction.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\Arg.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\ARMInsnDecoder.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\BranchInstruction.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\memory\CollectionMemory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\cond.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\CondInstruction.cpp"
 				>
 			</File>
 			<File
@@ -184,7 +212,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\core\DecodingInstructionDecoder.cpp"
+				RelativePath="..\..\..\memory\DecoratorMemory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\DPInstruction.cpp"
 				>
 			</File>
 			<File
@@ -196,11 +228,35 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\instructions\EorInstruction.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\ImmedArg.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\InsnDecoder.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\instructions\Instruction.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\core\InstructionDecoder.cpp"
+				RelativePath="..\..\..\instructions\LoadStoreInstruction.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\LoadStoreMultipleInstruction.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\MoveInstruction.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\OrrInstruction.cpp"
 				>
 			</File>
 			<File
@@ -208,7 +264,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\loader\PELoader.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\core\ProgramStatusRegister.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\RegArg.cpp"
 				>
 			</File>
 			<File
@@ -216,11 +280,35 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\instructions\ShOpLSLArg.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\ShOpRORArg.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\ShOpRRXArg.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\ShOpShiftArg.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\ShOpSRArg.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\memory\StreamMemory.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\instructions\util.cpp"
+				RelativePath="..\..\..\instructions\Subtraction.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\SWIInstruction.cpp"
 				>
 			</File>
 			<File
@@ -234,11 +322,39 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath="..\..\..\instructions\Addition.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\AndInstruction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\Arg.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\ARMInsnDecoder.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\armyconfig.h"
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\instructions\BranchInstruction.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\memory\CollectionMemory.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\cond.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\CondInstruction.h"
 				>
 			</File>
 			<File
@@ -250,11 +366,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\core\DecodingInstructionDecoder.h"
+				RelativePath="..\..\..\memory\DecoratorMemory.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\memory\DecoratorMemory.h"
+				RelativePath="..\..\..\instructions\DPInstruction.h"
 				>
 			</File>
 			<File
@@ -266,6 +382,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\instructions\EorInstruction.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\core\Exception.h"
 				>
 			</File>
@@ -274,11 +394,31 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\instructions\ImmedArg.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\InsnDecoder.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\InsnMeta.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\instructions\Instruction.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\core\InstructionDecoder.h"
+				RelativePath="..\..\..\instructions\InstructionSet.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\LoadStoreInstruction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\LoadStoreMultipleInstruction.h"
 				>
 			</File>
 			<File
@@ -286,7 +426,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\instructions\MoveInstruction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\OrrInstruction.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\memory\PagedMemory.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\loader\PELoader.h"
 				>
 			</File>
 			<File
@@ -298,11 +450,43 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\instructions\RegArg.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\core\RuntimeException.h"
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\instructions\ShOpLSLArg.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\ShOpRORArg.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\ShOpRRXArg.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\ShOpShiftArg.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\ShOpSRArg.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\memory\StreamMemory.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\Subtraction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\SWIInstruction.h"
 				>
 			</File>
 			<File

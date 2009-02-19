@@ -11,16 +11,40 @@ SET(CORE_SRCS
     memory/StreamMemory.cpp
     memory/PagedMemory.cpp
     memory/CollectionMemory.cpp
+    memory/DecoratorMemory.cpp
     memory/EndianMemory.cpp
     memory/VirtualMemory.cpp
     loader/ELFLoader.cpp
+    loader/PELoader.cpp
     core/CPU.cpp
-    core/DecodingInstructionDecoder.cpp
-    core/InstructionDecoder.cpp
     core/ProgramStatusRegister.cpp
     core/CPURegisters.cpp
     core/RuntimeException.cpp
+    instructions/cond.cpp
     instructions/Instruction.cpp
+    instructions/Arg.cpp
+    instructions/RegArg.cpp
+    instructions/ImmedArg.cpp
+    instructions/ShOpShiftArg.cpp
+    instructions/ShOpLSLArg.cpp
+    instructions/ShOpSRArg.cpp
+    instructions/ShOpRORArg.cpp
+    instructions/ShOpRRXArg.cpp
+    instructions/Instruction.cpp
+    instructions/DPInstruction.cpp
+    instructions/Subtraction.cpp
+    instructions/Addition.cpp
+    instructions/AndInstruction.cpp
+    instructions/EorInstruction.cpp
+    instructions/OrrInstruction.cpp
+    instructions/BranchInstruction.cpp
+    instructions/MoveInstruction.cpp
+    instructions/CondInstruction.cpp
+    instructions/LoadStoreInstruction.cpp
+    instructions/LoadStoreMultipleInstruction.cpp
+    instructions/SWIInstruction.cpp
+    instructions/InsnDecoder.cpp
+    instructions/ARMInsnDecoder.cpp
     )
 ADD_LIBRARY(armycore SHARED ${CORE_SRCS})
 SET_TARGET_PROPERTIES(armycore PROPERTIES
@@ -46,3 +70,8 @@ TARGET_LINK_LIBRARIES(armytest armycore ${CPPUNIT_LIBRARY})
 SET_TARGET_PROPERTIES(armytest PROPERTIES
     COMPILE_FLAGS "-Wall"
     )
+
+ADD_EXECUTABLE(armyexec
+    exec/main.cpp
+    )
+TARGET_LINK_LIBRARIES(armyexec armycore)

@@ -5,6 +5,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include "test/loader/TestExecutables.h"
+#include "memory/VirtualMemory.h"
 
 Segment::Segment(addr_t vm_start_, addr_t fl_start_, std::size_t size_, int prot_)
 :
@@ -392,7 +393,10 @@ struct segment_checker : public std::unary_function<const Segment&, void>
         std::pair<std::string::const_iterator, std::string::const_iterator> comparison = 
             std::mismatch(it, it_end, actual_contents.begin());
         CPPUNIT_ASSERT(comparison.first == it_end);
-        CPPUNIT_ASSERT_EQUAL(segm.prot, mem_.get_protect(segm.vm_start));
+        for (addr_t addr = segm.vm_start; addr <= segm.vm_start + segm.size; addr += VirtualMemory::page_size())
+        {
+            CPPUNIT_ASSERT_EQUAL(segm.prot, mem_.get_protect(addr));
+        }
         CPPUNIT_ASSERT_EQUAL(segm.prot, mem_.get_protect(segm.vm_start + segm.size - 1));
     }
 private:

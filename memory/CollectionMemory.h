@@ -11,7 +11,7 @@ public:
     std::string read(addr_t addr, size_t bytes);
     void       write(addr_t addr, const std::string &data);
     virtual void alloc_protect(addr_t addr, std::size_t size, int protect);
-    virtual int get_protect(addr_t addr);
+    virtual int get_protect(addr_t addr) const;
 
     ~CollectionMemory();
 

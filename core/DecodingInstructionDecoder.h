@@ -11,8 +11,9 @@ class DecodingInstructionDecoder : public InstructionDecoder {
 public:
     DecodingInstructionDecoder();
 
-    const Instruction *fetch_and_decode(addr_t insn_addr, EndianMemory &mem);
-    void invalidate_cache(addr_t insn_addr_start, addr_t insn_addr_end);
+    virtual Instruction *fetch_and_decode(addr_t insn_addr, EndianMemory &mem);
+    virtual void dispose(Instruction *insn);
+    virtual void invalidate_cache(addr_t insn_addr_start, addr_t insn_addr_end);
     ~DecodingInstructionDecoder();
 
 private:

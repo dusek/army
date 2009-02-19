@@ -41,14 +41,17 @@ public:
     //maybe not really for performance reasons (reference on very small type)
     ARM_Word get_reg(Register reg) const;
     void     set_reg(Register reg, ARM_Word value);
+    bool is_PC_dirty() const;
 
-    ProgramStatusRegister get_status_reg(StatusRegister reg) const;
-    void                  set_status_reg(StatusRegister reg, const ProgramStatusRegister &value);
+    ProgramStatusRegister& status_reg(StatusRegister reg);
+    bool& end();
     
 private:
     class CPURegistersImpl;
     CPURegistersImpl *pimpl;
 };
+
+CPURegisters::Register RegisterFromWord(ARM_Word word, std::size_t pos);
 
 #endif
 

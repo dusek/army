@@ -7,44 +7,27 @@
 #include "core/CPURegisters.h"
 #include "memory/EndianMemory.h"
 
-class Instruction {
-public:
+namespace arm {
 
-    /**
-     * Returns true if instruction word \a insn_word represents binary form
-     * of this instruction.
-     */
-    virtual bool represented_by(ARM_Word insn_word) const = 0;
+    class Instruction
+    {
+    public:
+        virtual ~Instruction();
+        // instruction instance = "executable description of change of the state of the CPU"
 
-    /**
-     * Decodes instruction word \a insn_word and stores the results in this
-     * instruction instance.
-     */
-    virtual void decode(ARM_Word insn_word) = 0;
+        // executable
+        virtual void execute(CPURegisters&, EndianMemory&) const = 0;
 
-    /**
-     * Returns if this instruction is executable based on its condition code
-     */
-    virtual bool executable(const CPURegisters &regs) const = 0;
+        // description
+        virtual void fmt(std::ostream&) const = 0;
 
-    /**
-     * Executes this instruction on the supplied CPU
-     */
-    virtual void execute(CPURegisters &regs, EndianMemory &mem) const = 0;
+        // and nothing more!!!
 
-    /**
-     * Prints text representation of this instruction in assembly-like language
-     */
-    virtual void print(std::ostream &o) const = 0;
+    protected:
+        Instruction();
+    };
 
-    /**
-     * Returns exact copy of this instruction
-     */
-    virtual Instruction *clone() const = 0;
-
-    virtual ~Instruction() = 0;
-};
-
-ARMYCORE_EXPORT std::ostream &operator<<(std::ostream &o, const Instruction &instruction);
+    std::ostream& operator<<(std::ostream&, const Instruction&);
+}
 
 #endif

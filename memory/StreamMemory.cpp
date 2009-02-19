@@ -25,7 +25,7 @@ StreamMemory::~StreamMemory() {
     delete stream;
 }
 
-int StreamMemory::get_protect(addr_t /*addr*/)
+int StreamMemory::get_protect(addr_t /*addr*/) const
 {
     return Memory::Read | Memory::Write | Memory::Execute;
 }

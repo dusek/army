@@ -19,7 +19,9 @@ static std::string endian_swap(std::string data, Endianness memory_endianness)
 }
 
 EndianMemory::EndianMemory(Memory *engine, Endianness end)
-: endianness_(end)
+:
+DecoratorMemory(engine),
+endianness_(end)
 {
     this->engine = engine;
 }

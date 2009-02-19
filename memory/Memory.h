@@ -33,7 +33,7 @@ public:
     /* Return value: protection of unique page at virtual address "addr",
     ** or -1 if this page does not exist.
     */
-    virtual int get_protect(addr_t addr) = 0;
+    virtual int get_protect(addr_t addr) const = 0;
 
     virtual ~Memory(void){};
 

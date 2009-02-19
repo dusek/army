@@ -1,59 +1,82 @@
+#include <string>
+#include <bitset>
+
 #include "core/CPU.h"
 
 #include "memory/Memory.h"
 #include "memory/PagedMemory.h"
 #include "memory/EndianMemory.h"
-#include "core/DecodingInstructionDecoder.h"
+//#include "instructions/CachingInsnDecoder.h"
+#include "instructions/ARMInsnDecoder.h"
 
 #include "instructions/Instruction.h"
 
-CPU::CPU(Memory *external_mem, Endianness mem_endianness, bool log)
-: log_(log)
+CPU::CPU(EndianMemory& external_mem, bool log, int argc, const char **argv)
+:
+log_(log),
+mem_(external_mem),
+insn_decoder_(new ARMInsnDecoder)
 {
-    this->attached_mem_ = external_mem;
-    this->translated_mem_ = new PagedMemory(attached_mem_, 12);
-    this->value_mem_ = new EndianMemory(translated_mem_, mem_endianness);
-    this->insn_decoder_ = new DecodingInstructionDecoder();
-}
+    const addr_t addr_base = 0x37240000; // "randomness"
+    addr_t addr_arg = addr_base; // "randomness"
 
-void CPU::set_log(bool doLog)
-{
-    log_ = doLog;
+    std::size_t total_size = 0;
+    int arg = 0;
+    for (; arg < argc; ++arg) {
+        const char *argstr = argv[arg];
+        total_size += ::strlen(argstr) + 1;
+    }
+
+    mem_.alloc_protect(addr_base, total_size, Memory::Read | Memory::Write);
+
+    for (arg = 0; arg < argc; ++arg) {
+        const char *argstr = argv[arg];
+        const std::size_t size = ::strlen(argstr) + 1;
+        mem_.write(addr_arg, std::string(argstr, argstr + size));
+        mem_.write_value(addr_base + 4*arg, addr_arg);
+        addr_arg += size;
+    }
+
+    mem_.alloc_protect(addr_base, total_size, Memory::Read);
+    regs_.set_reg(CPURegisters::R0, argc);
+    regs_.set_reg(CPURegisters::R1, addr_base);
 }
 
 void CPU::step()
 {
     addr_t insn_addr = regs_.get_reg(CPURegisters::PC);
-    const Instruction *instruction = insn_decoder_->fetch_and_decode(insn_addr, *value_mem_);
-    bool executable = instruction->executable(regs_);
-    if (log_) {
-        std::cerr << std::hex << insn_addr << std::dec << ": ";
-        if (executable)
-            std::cerr << "   ";
-        else
-            std::cerr << "XXX";
-        std::cerr << *instruction << std::endl;
+    arm::Instruction *instruction = insn_decoder_->fetch_decode(insn_addr, mem_);
+
+    if (instruction) {
+        if (log_) {
+            std::cerr << std::hex << insn_addr << ": " << *instruction << std::endl;
+        }
+
+        instruction->execute(regs_, mem_);
+
+        insn_decoder_->dispose(instruction);
+        if (!regs_.is_PC_dirty()) {
+            insn_addr += 4;
+            regs_.set_reg(CPURegisters::PC, insn_addr);
+            regs_.is_PC_dirty();
+        }
+    } else {
+        ARM_Word insn_word = mem_.read_value(insn_addr);
+        std::cerr << std::hex << insn_addr << ": Invalid instruction word: " << std::hex << insn_word  << " (" << std::bitset<32>(insn_word) << ")" << std::endl;
+        regs_.end() = true;
     }
-
-    if (executable)
-        instruction->execute(regs_, *value_mem_);
-
-    delete instruction;
-    //FIXME if instruction writes to PC, special things must happen
-    //maybe RegisterArgument on write to PC will write the address just
-    //so that we don't have to modify the below code
-    insn_addr += 4;
-    regs_.set_reg(CPURegisters::PC, insn_addr);
 }
 
-void CPU::run(addr_t start_addr)
+void CPU::run(addr_t entry_point)
 {
-    regs_.set_reg(CPURegisters::PC, start_addr);
-    try {
-        for(;;)
-            step();
-    } catch (RuntimeException &) {
-        //FIXME this is just stub, should differentiate program termination (on memory read error)
-        //or something really bad (like undefined instruction etc.)
+    regs_.set_reg(CPURegisters::PC, entry_point);
+    regs_.is_PC_dirty();
+    while (!regs_.end()) {
+        step();
     }
+}
+
+CPU::~CPU()
+{
+    delete insn_decoder_;
 }

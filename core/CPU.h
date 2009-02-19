@@ -2,11 +2,8 @@
 #define ARMY_CORE_CPU_H_
 
 #include "core/CPURegisters.h"
-
-class Memory;
-class EndianMemory;
-class PagedMemory;
-class InstructionDecoder;
+#include "instructions/InsnDecoder.h"
+#include "memory/EndianMemory.h"
 
 /**
  * Abstraction of physical CPU.
@@ -15,32 +12,32 @@ class InstructionDecoder;
  * to own things that are CPU owned (e.g registers)
  * and have outlets (references) to external (attached) parts (e.g. memory)
  */
-class CPU {
+class ARMYCORE_EXPORT CPU {
 public:
     /**
      * Construct CPU with external_mem attached, specifying the
      * memory's endianness
      */
-    CPU(Memory *external_mem, Endianness mem_endianness, bool log = false);
-    void set_log(bool doLog);
+    CPU(EndianMemory& external_mem, bool log, int argc, const char **argv);
+    ~CPU();
+
     void step();
-    void run(addr_t start_addr);
+    void run(addr_t entry_point);
 
 private:
     /**
      * CPU owned parts
      */
     CPURegisters regs_;
-    InstructionDecoder *insn_decoder_;
-    EndianMemory *value_mem_;
-    PagedMemory *translated_mem_;
+    //InstructionDecoder *insn_decoder_;
     bool log_;
 
     /**
      * Outlets (attached parts)
      * we are not responsible for owning them, so we keep a reference
      */
-    Memory *attached_mem_;
+    EndianMemory& mem_;
+    InsnDecoder *insn_decoder_;
 
     CPU(const CPU &cpu);
     CPU &operator=(const CPU&);

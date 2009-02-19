@@ -216,7 +216,7 @@ void VirtualMemory::alloc_protect(addr_t addr, std::size_t size, int protect)
         pimpl_->alloc_protect(addr, protect);
 }
 
-int VirtualMemory::get_protect(addr_t addr)
+int VirtualMemory::get_protect(addr_t addr) const
 {
     int prot = -1;
 
@@ -293,4 +293,9 @@ std::string VirtualMemory::read(addr_t addr, std::size_t bytes)
 VirtualMemory::~VirtualMemory()
 {
     delete pimpl_;
+}
+
+std::size_t VirtualMemory::page_size()
+{
+    return s_page_size;
 }

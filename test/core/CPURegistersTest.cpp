@@ -33,9 +33,8 @@ void CPURegistersTest::setUp() {
     regs_ = new CPURegisters();
 
     //we always start in User mode
-    ProgramStatusRegister cpsr = regs_->get_status_reg(CPURegisters::CPSR);
+    ProgramStatusRegister& cpsr = regs_->status_reg(CPURegisters::CPSR);
     cpsr.set_mode(ProgramStatusRegister::User);
-    regs_->set_status_reg(CPURegisters::CPSR, cpsr);
 }
 
 void CPURegistersTest::tearDown() {
@@ -47,9 +46,8 @@ void CPURegistersTest::testRegs() {
 
     for (int i = 0; i < mode_count; i++) {
         ProgramStatusRegister::Mode mode = modes[i];
-        ProgramStatusRegister cpsr = regs_->get_status_reg(CPURegisters::CPSR);
+        ProgramStatusRegister& cpsr = regs_->status_reg(CPURegisters::CPSR);
         cpsr.set_mode(mode);
-        regs_->set_status_reg(CPURegisters::CPSR, cpsr);
 
     //Write all registers a unique value
         regs_->set_reg(CPURegisters::R0,  1 + 16*i);
@@ -103,10 +101,8 @@ void CPURegistersTest::testRegs() {
         //overwritten
         ProgramStatusRegister::Mode prev_mode;
         if (mode != ProgramStatusRegister::User) {
-            cpsr = regs_->get_status_reg(CPURegisters::CPSR);
             prev_mode = modes[i-1];
             cpsr.set_mode(prev_mode);
-            regs_->set_status_reg(CPURegisters::CPSR, cpsr);
 
             switch (mode) {
             case ProgramStatusRegister::FIQ:
@@ -189,9 +185,8 @@ static bool set_bit(int mode, int bit)
 
 static void set_mode(CPURegisters &regs, ProgramStatusRegister::Mode mode)
 {
-    ProgramStatusRegister cpsr = regs.get_status_reg(CPURegisters::CPSR);
+    ProgramStatusRegister& cpsr = regs.status_reg(CPURegisters::CPSR);
     cpsr.set_mode(mode);
-    regs.set_status_reg(CPURegisters::CPSR, cpsr);
 }
 
 static void compare_psr_bits(const ProgramStatusRegister &expected, const ProgramStatusRegister &actual)
@@ -212,20 +207,20 @@ void CPURegistersTest::testCPSR() {
         ProgramStatusRegister::Mode mode = modes[mode_];
         set_mode(*regs_, mode);
         //prepare a per-mode unique CPSR-bits value
-        ProgramStatusRegister psr = regs_->get_status_reg(CPURegisters::CPSR);
+        ProgramStatusRegister psr = regs_->status_reg(CPURegisters::CPSR);
         for (int bit_ = 0; bit_ < bit_count; bit_++) {
             ProgramStatusRegister::Bit bit = bits[bit_];
             psr.set_bit(bit, set_bit(mode_, bit_));
         }
         //set the value
-        regs_->set_status_reg(CPURegisters::CPSR, psr);
+        regs_->status_reg(CPURegisters::CPSR) = psr;
         //see that in every mode, the value of bits is as in psr
         for (int mode2_ = 0; mode2_ < mode_count; mode2_++) {
             //change mode
             ProgramStatusRegister::Mode mode2 = modes[mode2_];
             set_mode(*regs_, mode2);
             //get the mode's CPSR
-            ProgramStatusRegister actual_cpsr = regs_->get_status_reg(CPURegisters::CPSR);
+            ProgramStatusRegister actual_cpsr = regs_->status_reg(CPURegisters::CPSR);
             compare_psr_bits(psr, actual_cpsr);
         }
     }
@@ -259,28 +254,28 @@ void CPURegistersTest::testSPSR() {
         spsr_regs[mode] = saved_spsr;
         //and now save the value to the appropriate mode's SPSR
         set_mode(*regs_, mode);
-        CPPUNIT_ASSERT_NO_THROW(regs_->set_status_reg(CPURegisters::SPSR, saved_spsr));
-        CPPUNIT_ASSERT_NO_THROW(regs_->get_status_reg(CPURegisters::SPSR));
+        CPPUNIT_ASSERT_NO_THROW(regs_->status_reg(CPURegisters::SPSR) =  saved_spsr);
+        CPPUNIT_ASSERT_NO_THROW(regs_->status_reg(CPURegisters::SPSR));
     }
 
-    ProgramStatusRegister cpsr = regs_->get_status_reg(CPURegisters::CPSR);
+    ProgramStatusRegister cpsr = regs_->status_reg(CPURegisters::CPSR);
     cpsr.set_bit(ProgramStatusRegister::N);
     cpsr.set_bit(ProgramStatusRegister::F);
-    regs_->set_status_reg(CPURegisters::CPSR, cpsr);
+    regs_->status_reg(CPURegisters::CPSR) = cpsr;
     //for each mode
     for (int mode_ = 0; mode_ < mode_count; mode_++) {
         ProgramStatusRegister::Mode mode = modes[mode_];
         set_mode(*regs_, mode);
 
         if (mode == ProgramStatusRegister::User || mode == ProgramStatusRegister::System) {
-            CPPUNIT_ASSERT_THROW(regs_->set_status_reg(CPURegisters::SPSR, ProgramStatusRegister()), RuntimeException);
-            CPPUNIT_ASSERT_THROW(regs_->get_status_reg(CPURegisters::SPSR), RuntimeException);
+            CPPUNIT_ASSERT_THROW(regs_->status_reg(CPURegisters::SPSR) = ProgramStatusRegister(), RuntimeException);
+            CPPUNIT_ASSERT_THROW(regs_->status_reg(CPURegisters::SPSR), RuntimeException);
             continue;
         }
 
         ProgramStatusRegister spsr_saved = spsr_regs[mode];
-        regs_->set_status_reg(CPURegisters::SPSR, spsr_saved);
-        ProgramStatusRegister cpsr_actual = regs_->get_status_reg(CPURegisters::CPSR);
+        regs_->status_reg(CPURegisters::SPSR) =  spsr_saved;
+        ProgramStatusRegister cpsr_actual = regs_->status_reg(CPURegisters::CPSR);
         compare_psr_bits(cpsr, cpsr_actual);
 
         //check that set_status_reg above did not overwrite other mode's SPSR
@@ -288,15 +283,15 @@ void CPURegistersTest::testSPSR() {
             ProgramStatusRegister::Mode mode2 = modes[mode2_];
             set_mode(*regs_, mode2);
             cpsr.set_mode(mode2);
-            CPPUNIT_ASSERT_EQUAL(cpsr, regs_->get_status_reg(CPURegisters::CPSR));
+            CPPUNIT_ASSERT_EQUAL(cpsr, regs_->status_reg(CPURegisters::CPSR));
 
             if (mode2 == ProgramStatusRegister::User || mode2 == ProgramStatusRegister::System) {
-                CPPUNIT_ASSERT_THROW(regs_->set_status_reg(CPURegisters::SPSR, ProgramStatusRegister()), RuntimeException);
-                CPPUNIT_ASSERT_THROW(regs_->get_status_reg(CPURegisters::SPSR), RuntimeException);
+                CPPUNIT_ASSERT_THROW(regs_->status_reg(CPURegisters::SPSR) = ProgramStatusRegister(), RuntimeException);
+                CPPUNIT_ASSERT_THROW(regs_->status_reg(CPURegisters::SPSR), RuntimeException);
                 continue;
             }
 
-            ProgramStatusRegister spsr_actual = regs_->get_status_reg(CPURegisters::SPSR);
+            ProgramStatusRegister spsr_actual = regs_->status_reg(CPURegisters::SPSR);
             ProgramStatusRegister spsr_saved2 = spsr_regs[mode2];
             CPPUNIT_ASSERT_EQUAL(spsr_saved2, spsr_actual);
         }
