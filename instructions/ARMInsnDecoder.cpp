@@ -48,8 +48,9 @@ arm::Instruction *ARMInsnDecoder::fetch_decode(addr_t addr, EndianMemory &mem)
                             insn = arm::is::UMULL(RegisterFromWord(insn_word, 12), RegisterFromWord(insn_word, 16), RegisterFromWord(insn_word, 0), RegisterFromWord(insn_word, 8), word.test(20), cond_);
                         else
                             insn = arm::is::MUL(RegisterFromWord(insn_word, 16), RegisterFromWord(insn_word, 0), RegisterFromWord(insn_word, 8), word.test(20), cond_);
+                    } else {
+                        std::cerr << "Not implemented instruction: multiplies, extra load/stores" << std::endl;
                     }
-                    std::cerr << "Not implemented instruction: multiplies, extra load/stores" << std::endl;
                 } else if (word.test(24) && !word.test(23) && !word.test(20)) {
                     if (!word.test(4)) {
                         // move status register to register, move register to status register
