@@ -16,10 +16,11 @@ ARM_Word Subtraction::compute_result(ARM_Word op1, ARM_Word op2, bool update_cv,
 
     if (update_cv) {
         // update C
-        bool cbit = (op2 == 0xffffffff) && (carry_value == 1);
-        if (!cbit)
-            cbit = result > op1;
-        cpsr.set_bit(ProgramStatusRegister::C, cbit);
+        // carry is 0 if borrow occured, so we compute negated carry (easier (more readable) to express)
+        bool cbit_neg = (op2 == 0xffffffff) && (carry_value == 1);
+        if (!cbit_neg)
+            cbit_neg = result > op1;
+        cpsr.set_bit(ProgramStatusRegister::C, !cbit_neg);
 
         // update V
         bool vbit = false;
