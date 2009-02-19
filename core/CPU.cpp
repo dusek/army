@@ -15,7 +15,8 @@ CPU::CPU(EndianMemory& external_mem, bool log, int argc, const char **argv)
 :
 log_(log),
 mem_(external_mem),
-insn_decoder_(new ARMInsnDecoder)
+insn_decoder_(new ARMInsnDecoder),
+pc_counter_(0)
 {
     const addr_t addr_base = 0x37240000; // "randomness"
     addr_t addr_arg = addr_base; // "randomness"
@@ -65,6 +66,13 @@ void CPU::step()
         std::cerr << std::hex << insn_addr << ": Invalid instruction word: " << std::hex << insn_word  << " (" << std::bitset<32>(insn_word) << ")" << std::endl;
         regs_.end() = true;
     }
+
+    ++pc_counter_;
+}
+
+uint64_t CPU::pc_counter() const
+{
+    return pc_counter_;
 }
 
 void CPU::run(addr_t entry_point)

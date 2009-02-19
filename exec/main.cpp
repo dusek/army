@@ -53,6 +53,7 @@ int main(int argc, const char **argv)
     cpu.run(entry_point);
 
     std::cout << "Execution ended." << std::endl;
+    std::cout << "Executed " << cpu.pc_counter() << " instructions." << std::endl;
 
     return EXIT_SUCCESS;
 }

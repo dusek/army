@@ -23,6 +23,7 @@ public:
 
     void step();
     void run(addr_t entry_point);
+    uint64_t pc_counter() const;
 
 private:
     /**
@@ -38,6 +39,7 @@ private:
      */
     EndianMemory& mem_;
     InsnDecoder *insn_decoder_;
+    uint64_t pc_counter_;
 
     CPU(const CPU &cpu);
     CPU &operator=(const CPU&);
