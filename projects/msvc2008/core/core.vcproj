@@ -256,6 +256,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\instructions\MultiplyInstruction.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\instructions\OrrInstruction.cpp"
 				>
 			</File>
@@ -427,6 +431,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\instructions\MoveInstruction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\instructions\MultiplyInstruction.h"
 				>
 			</File>
 			<File
