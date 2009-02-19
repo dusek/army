@@ -1,8 +1,18 @@
 #include <syscalls.h>
 #include <string.h>
 
+void usage(int fd)
+{
+    write(fd, "Usage: \"fibonacci N\" (computes Fib(N))\n", 39);
+}
+
 void Fib(int argc, char **argv) {
     int x,y,z;
+
+    if (argc < 2) {
+        usage(stderr);
+        exit();
+    }
 
     uint32_t N = strtou32(argv[1]);
     
