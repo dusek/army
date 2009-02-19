@@ -26,7 +26,15 @@ void LoadStoreMultipleInstruction::do_execute(CPURegisters &regs, EndianMemory &
         addr += addr_step;
 
     std::bitset<32> reg_mask(reg_mask_);
-    for (int i = 0; i < 16; ++i) {
+    int reg_begin = 0;
+    int reg_end = 16;
+    int reg_step = 1;
+    if (!increment_) {
+        reg_begin = 15;
+        reg_end = -1;
+        reg_step = -1;
+    }
+    for (int i = reg_begin; i != reg_end; i += reg_step) {
         if (reg_mask.test(i)) {
             if (trans_type_ == Load)
                 regs.set_reg(CPURegisters::Register(i), mem.read_value(addr));
