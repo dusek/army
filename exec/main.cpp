@@ -12,6 +12,8 @@
 
 #include "core/CPU.h"
 
+#include "platform/Time.h"
+
 void usage(std::ostream& o)
 {
     o << "Usage: armyexec 1|0 image_file [guest_arg1 [guest_arg2[ ... ]]" << std::endl;
@@ -50,10 +52,16 @@ int main(int argc, const char **argv)
 
     CPU cpu(mem, log, argc - 2, argv + 2);
     std::cout << "Loaded image, starting execution" << std::endl;
+    Time time_start = Time::now();
     cpu.run(entry_point);
+    Time time_end = Time::now();
+    Time duration = time_end - time_start;
 
     std::cout << "Execution ended." << std::endl;
     std::cout << "Executed " << cpu.pc_counter() << " instructions." << std::endl;
+    std::cout.setf(std::ios_base::fixed);
+    std::cout.precision(2);
+    std::cout << "Execution took " << duration << " (" << ((double)cpu.pc_counter())/((double)duration.time()) << " \"MHz\")" << std::endl;
 
     return EXIT_SUCCESS;
 }

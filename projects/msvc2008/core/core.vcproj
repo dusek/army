@@ -324,6 +324,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\platform\Time.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\memory\VirtualMemory.cpp"
 				>
 			</File>
@@ -511,6 +515,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\instructions\SWIInstruction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\platform\Time.h"
 				>
 			</File>
 			<File

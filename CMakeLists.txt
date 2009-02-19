@@ -16,6 +16,7 @@ SET(CORE_SRCS
     memory/VirtualMemory.cpp
     loader/ELFLoader.cpp
     loader/PELoader.cpp
+    platform/Time.cpp
     core/CPU.cpp
     core/ProgramStatusRegister.cpp
     core/CPURegisters.cpp
