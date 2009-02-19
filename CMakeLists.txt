@@ -46,6 +46,7 @@ SET(CORE_SRCS
     instructions/CLZInstruction.cpp
     instructions/InsnDecoder.cpp
     instructions/ARMInsnDecoder.cpp
+    instructions/CachingInsnDecoder.cpp
     )
 ADD_LIBRARY(armycore SHARED ${CORE_SRCS})
 SET_TARGET_PROPERTIES(armycore PROPERTIES

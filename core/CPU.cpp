@@ -6,7 +6,7 @@
 #include "memory/Memory.h"
 #include "memory/PagedMemory.h"
 #include "memory/EndianMemory.h"
-//#include "instructions/CachingInsnDecoder.h"
+#include "instructions/CachingInsnDecoder.h"
 #include "instructions/ARMInsnDecoder.h"
 
 #include "instructions/Instruction.h"
@@ -15,7 +15,7 @@ CPU::CPU(EndianMemory& external_mem, bool log, int argc, const char **argv)
 :
 log_(log),
 mem_(external_mem),
-insn_decoder_(new ARMInsnDecoder),
+insn_decoder_(new CachingInsnDecoder(new ARMInsnDecoder, 4, 4096)),
 pc_counter_(0)
 {
     const addr_t addr_base = 0x37240000; // "randomness"
