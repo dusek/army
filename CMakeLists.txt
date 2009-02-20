@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 2.6)
 project(army)
 
 SET(BINDIR ${CMAKE_BUILD_TYPE})
