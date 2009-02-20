@@ -9,7 +9,7 @@ namespace arm {
 class MultiplyInstruction : public CondInstruction
 {
 public:
-    MultiplyInstruction(CPURegisters::Register dest_lo, CPURegisters::Register dest_hi, Arg *op1, Arg *op2, EndianMemory::Signedness signedness, bool long_, bool update_cpsr, Cond cond = AL);
+    MultiplyInstruction(CPURegisters::Register dest_lo, CPURegisters::Register dest_hi, Arg *op1, Arg *op2, bool accumulate, EndianMemory::Signedness signedness, bool long_, bool update_cpsr, Cond cond = AL);
     ~MultiplyInstruction();
 
     virtual void do_execute(CPURegisters&, EndianMemory&) const;
@@ -20,14 +20,15 @@ private:
     CPURegisters::Register dest_hi_;
     Arg *op1_;
     Arg *op2_;
+    bool accumulate_;
     EndianMemory::Signedness signedness_;
     bool long_;
     bool update_cpsr_;
 };
 
 namespace is {
-    Instruction *UMULL(CPURegisters::Register dest_lo, CPURegisters::Register dest_hi, CPURegisters::Register op1, CPURegisters::Register op2, bool S, Cond cond = AL);
-    Instruction *MUL(CPURegisters::Register dest, CPURegisters::Register op1, CPURegisters::Register op2, bool S, Cond cond = AL);
+    Instruction *MULL(CPURegisters::Register dest_lo, CPURegisters::Register dest_hi, CPURegisters::Register op1, CPURegisters::Register op2, bool accumulate, EndianMemory::Signedness signedness, bool S, Cond cond = AL);
+    Instruction *MUL(CPURegisters::Register dest, CPURegisters::Register acc, CPURegisters::Register op1, CPURegisters::Register op2, bool accumulate, bool S, Cond cond = AL);
 }
 
 }

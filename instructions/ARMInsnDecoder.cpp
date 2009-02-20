@@ -42,14 +42,39 @@ arm::Instruction *ARMInsnDecoder::fetch_decode(addr_t addr, EndianMemory &mem)
                 // word[27..25] = 000
                 if (word.test(4) && word.test(7)) {
                     // multiplies, extra load/stores
-                    if (!word.test(24) && !word.test(22) && !word.test(21)) {
-                        // MUL or UMULL
-                        if (word.test(23))
-                            insn = arm::is::UMULL(RegisterFromWord(insn_word, 12), RegisterFromWord(insn_word, 16), RegisterFromWord(insn_word, 0), RegisterFromWord(insn_word, 8), word.test(20), cond_);
-                        else
-                            insn = arm::is::MUL(RegisterFromWord(insn_word, 16), RegisterFromWord(insn_word, 0), RegisterFromWord(insn_word, 8), word.test(20), cond_);
+                    if (word.test(6)) {
+                        std::cerr << "Not implemented instruction: extra load/store" << std::endl;
                     } else {
-                        std::cerr << "Not implemented instruction: multiplies, extra load/stores" << std::endl;
+                        if (word.test(5)) {
+                            //word[6..5] = 01
+                            std::cerr << "Not implemented instruction: extra load/store" << std::endl;
+                        } else {
+                            //word[6..5] = 00
+                            if (word.test(24)) {
+                                std::cerr << "Not implemented instruction: \"Swap/swap byte\"" << std::endl;
+                            } else {
+                                bool S = word.test(20);
+                                bool accumulate = word.test(21);
+                                CPURegisters::Register op1 = RegisterFromWord(insn_word, 0);
+                                CPURegisters::Register op2 = RegisterFromWord(insn_word, 8);
+
+                                if (word.test(23)) {
+                                    // multiply (accumulate) long
+                                    CPURegisters::Register dest_hi = RegisterFromWord(insn_word, 16);
+                                    CPURegisters::Register dest_lo = RegisterFromWord(insn_word, 12);
+
+                                    EndianMemory::Signedness signedness = word.test(22) ? EndianMemory::Signed : EndianMemory::Unsigned;
+
+                                    insn = arm::is::MULL(dest_lo, dest_hi, op1, op2, accumulate, signedness, S, cond_);
+                                } else {
+                                    // multiply (accumulate)
+                                    CPURegisters::Register dest = RegisterFromWord(insn_word, 16);
+                                    CPURegisters::Register acc = RegisterFromWord(insn_word, 12);
+
+                                    insn = arm::is::MUL(dest, acc, op1, op2, accumulate, S, cond_);
+                                }
+                            }
+                        }
                     }
                 } else if (word.test(24) && !word.test(23) && !word.test(20)) {
                     if (!word.test(4)) {
