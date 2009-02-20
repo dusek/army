@@ -22,7 +22,7 @@ private:
 
 namespace std {
     template<>
-    void std::swap(Time& t1, Time& t2)
+    void swap(Time& t1, Time& t2)
     {
         t1.swap(t2);
     }
