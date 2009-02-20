@@ -1,5 +1,5 @@
-#include <syscalls.h>
-#include <string.h>
+#include <armsdk/syscalls.h>
+#include <armsdk/string.h>
 
 void usage(int fd)
 {
