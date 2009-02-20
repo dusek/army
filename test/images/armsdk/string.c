@@ -28,12 +28,16 @@ void logu32(int fd, uint32_t val)
         write(fd, &c, 1);
     else {
         uint32_t old_level = level;
-        while (level <= val) {
-            old_level = level;
-            level += old_level << 2;
-            level += level;
+        if (val >= 1000000000)
+            level = 1000000000;
+        else {
+            while (level <= val) {
+                old_level = level;
+                level += old_level << 2;
+                level += level;
+            }
+            level = old_level;
         }
-        level = old_level;
         while (level > 0) {
             c = (val / level) + '0';
             write(fd, &c, 1);
