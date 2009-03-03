@@ -11,13 +11,17 @@
 
 #include "instructions/Instruction.h"
 
-CPU::CPU(EndianMemory& external_mem, bool log, int argc, const char **argv)
+CPU::CPU(EndianMemory& external_mem, bool log, bool log_dumpregs, int argc, const char **argv)
 :
 log_(log),
+log_dump_(log_dumpregs),
 mem_(external_mem),
 insn_decoder_(new CachingInsnDecoder(new ARMInsnDecoder, 4, 4096)),
 pc_counter_(0)
 {
+    regs_.set_reg(CPURegisters::SP, 0);
+
+    // copy arguments (argc,argv) to memory
     const addr_t addr_base = 0x37240000; // "randomness"
     addr_t addr_arg = addr_base; // "randomness"
 
@@ -54,6 +58,13 @@ void CPU::step()
         }
 
         instruction->execute(regs_, mem_);
+
+        if (log_dump_) {
+            regs_.dump(std::cerr);
+            std::cerr << std::endl;
+            std::cerr << "CPSR: " << regs_.status_reg(CPURegisters::CPSR) << std::endl;
+            std::cerr << std::endl;
+        }
 
         insn_decoder_->dispose(instruction);
         if (!regs_.is_PC_dirty()) {

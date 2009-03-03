@@ -1,4 +1,5 @@
 #include <cassert>
+#include <iomanip>
 
 #include "core/CPURegisters.h"
 
@@ -217,6 +218,25 @@ bool CPURegisters::is_PC_dirty() const
     bool ret = pimpl->PC_dirty_;
     pimpl->PC_dirty_ = false;
     return ret;
+}
+
+void CPURegisters::dump(std::ostream& o) const
+{
+    for (int line = 0; line < 2; ++line) {
+        for (int i = 0; i < 16; ++i) {
+            CPURegisters::Register reg = CPURegisters::Register(i);
+            if (line == 0) {
+                o << "R" << std::dec << i;
+                if (i < 10)
+                    o << " ";
+                o << "        ";
+            } else {
+                o << "0x" << std::hex << std::setw(8) << std::setfill('0') << get_reg(reg) << " ";
+            }
+        }
+        if (line == 0)
+            o << std::endl;
+    }
 }
 
 bool& CPURegisters::end()

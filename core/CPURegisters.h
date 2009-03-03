@@ -1,6 +1,8 @@
 #ifndef ARMY_CORE_CPU_STATE_H
 #define ARMY_CORE_CPU_STATE_H
 
+#include <ostream>
+
 #include "core/ProgramStatusRegister.h"
 #include "core/RuntimeException.h"
 
@@ -41,6 +43,7 @@ public:
     //maybe not really for performance reasons (reference on very small type)
     ARM_Word get_reg(Register reg) const;
     void     set_reg(Register reg, ARM_Word value);
+    void dump(std::ostream&) const;
     bool is_PC_dirty() const;
 
     ProgramStatusRegister& status_reg(StatusRegister reg);

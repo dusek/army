@@ -18,7 +18,7 @@ public:
      * Construct CPU with external_mem attached, specifying the
      * memory's endianness
      */
-    CPU(EndianMemory& external_mem, bool log, int argc, const char **argv);
+    CPU(EndianMemory& external_mem, bool log, bool log_dumpregs, int argc, const char **argv);
     ~CPU();
 
     void step();
@@ -32,6 +32,7 @@ private:
     CPURegisters regs_;
     //InstructionDecoder *insn_decoder_;
     bool log_;
+    bool log_dump_;
 
     /**
      * Outlets (attached parts)

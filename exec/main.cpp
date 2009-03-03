@@ -29,8 +29,11 @@ int main(int argc, const char **argv)
     const char *image_flnm = argv[2];
     
     bool log = false;
-    if (argv[1][0] == '1')
+    bool log_dumpregs = false;
+    if (argv[1][0] >= '1')
         log = true;
+    if (argv[1][0] >= '2')
+        log_dumpregs = true;
 
     std::fstream image(image_flnm, std::ios_base::binary | std::ios_base::in);
     if (image.fail()) {
@@ -50,7 +53,7 @@ int main(int argc, const char **argv)
         return EXIT_FAILURE;
     }
 
-    CPU cpu(mem, log, argc - 2, argv + 2);
+    CPU cpu(mem, log, log_dumpregs, argc - 2, argv + 2);
     std::cout << "Loaded image, starting execution" << std::endl;
     Time time_start = Time::now();
     cpu.run(entry_point);
