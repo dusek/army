@@ -3,7 +3,7 @@
 
 void usage(int fd)
 {
-    write(fd, "Usage: \"fibonacci N\" (computes Fib(N))\n", 39);
+    writes(fd, "Usage: \"fibonacci N\" (computes Fib(N))\n");
 }
 
 void Fib(int argc, char **argv) {
@@ -30,7 +30,8 @@ void Fib(int argc, char **argv) {
         } while (N >= 0);//BPL #-6
     }
 
-    logu32(stdout, x);
+    writei(stdout, x);
+    writes(stdout, "\n");
     exit();
 }
 

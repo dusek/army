@@ -1,4 +1,5 @@
-#include <string.h>
+#include "string.h"
+#include "syscalls.h"
 
 uint32_t strlen(const char *str)
 {
@@ -20,7 +21,7 @@ uint32_t strtou32(const char *str)
     return val;
 } 
 
-void logu32(int fd, uint32_t val)
+void writei(int fd, uint32_t val)
 {
     char c = '0';
     uint32_t level = 1;
@@ -45,5 +46,9 @@ void logu32(int fd, uint32_t val)
             level /= 10;
         }
     }
-    write(fd, "\n", 1);
+}
+
+void writes(int fd, const char *str)
+{
+    write(fd, str, strlen(str));
 }
