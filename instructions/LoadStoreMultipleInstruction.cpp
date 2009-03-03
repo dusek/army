@@ -71,9 +71,9 @@ void LoadStoreMultipleInstruction::fmt(std::ostream& o) const
         o << "D";
 
     if (inclusive_)
-        o << "A";
-    else
         o << "B";
+    else
+        o << "A";
 
     o << " R" << std::dec << addr_reg_;
 
