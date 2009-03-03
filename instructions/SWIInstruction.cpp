@@ -3,7 +3,7 @@
 
 #include "instructions/SWIInstruction.h"
 
-const static CPURegisters::Register swi_code_reg = CPURegisters::R10;
+const static CPURegisters::Register swi_code_reg = CPURegisters::R7;
 enum SYSCALL {
     SYSCALL_open = 0,
     SYSCALL_close = 1,
