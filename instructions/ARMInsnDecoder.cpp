@@ -120,9 +120,9 @@ arm::Instruction *ARMInsnDecoder::fetch_decode(addr_t addr, EndianMemory &mem)
                 else {
                     // load/store multiple
                     if (word.test(20))
-                        insn = arm::is::LDM(word.test(24), word.test(23), word.test(21), RegisterFromWord(insn_word, 16), insn_word, cond_);
+                        insn = arm::is::LDM(!word.test(24), word.test(23), word.test(21), RegisterFromWord(insn_word, 16), insn_word, cond_);
                     else
-                        insn = arm::is::STM(word.test(24), word.test(23), word.test(21), RegisterFromWord(insn_word, 16), insn_word, cond_);
+                        insn = arm::is::STM(!word.test(24), word.test(23), word.test(21), RegisterFromWord(insn_word, 16), insn_word, cond_);
                 }
             } else {
                 // word[27..25] = 101
