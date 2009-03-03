@@ -7,26 +7,36 @@
 .globl exit
 
 open:
-    MOV R10, #0
+    PUSH {R7}
+    MOV R7, #0
     SWI #0
+    POP {R7}
     BX LR
 
 close:
-    MOV R10, #1
+    PUSH {R7}
+    MOV R7, #1
     SWI #0
+    POP {R7}
     BX LR
 
 read:
-    MOV R10, #2
+    PUSH {R7}
+    MOV R7, #2
     SWI #0
+    POP {R7}
     BX LR
 
 write:
-    MOV R10, #3
+    PUSH {R7}
+    MOV R7, #3
     SWI #0
+    POP {R7}
     BX LR
 
 exit:
-    MOV R10, #4
+    PUSH {R7}
+    MOV R7, #4
     SWI #0
+    POP {R7}
     BX LR
