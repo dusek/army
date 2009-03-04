@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 2.6)
 project(army)
 
+if(CMAKE_COMPILER_IS_GNUCC)
+      add_definitions(-Wall -Wextra)
+endif(CMAKE_COMPILER_IS_GNUCC)
+
 SET(BINDIR ${CMAKE_BUILD_TYPE})
 SET(EXECUTABLE_OUTPUT_PATH ${BINDIR})
 SET(LIBRARY_OUTPUT_PATH ${BINDIR})

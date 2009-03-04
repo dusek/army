@@ -3,7 +3,7 @@
 #include <cppunit/CompilerOutputter.h>
 #include <cstdlib>
 
-int main (int argc, char *argv[])
+int main (int, char **)
 {
     CppUnit::Test *suite = CppUnit::TestFactoryRegistry::getRegistry().makeTest();
     CppUnit::TextUi::TestRunner runner;

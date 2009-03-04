@@ -34,7 +34,7 @@ ImmedArg *ImmedArg_decode(ARM_Word word, std::size_t bit_pos, std::size_t size, 
 ARM_Word ImmedArg_ValFromWord(ARM_Word word, std::size_t bit_pos, std::size_t size, bool to_double)
 {
     assert(bit_pos + size <= 32);
-    assert(bit_pos >= 0);
+    // assert(bit_pos >= 0); // size_t is unsigned
     
     word >>= bit_pos;
     ARM_Word mask = ~(0xffffffff << size);

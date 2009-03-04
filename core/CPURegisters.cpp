@@ -203,7 +203,7 @@ ProgramStatusRegister& CPURegisters::status_reg(CPURegisters::StatusRegister reg
 CPURegisters::Register RegisterFromWord(ARM_Word word, std::size_t pos)
 {
     assert(pos <= 28);
-    assert(pos >= 0);
+    // assert(pos >= 0); // size_t is unsigned
     // move the required bits to lowest 4 bits
     word >>= pos;
     // zero all bits other than lowest 4
