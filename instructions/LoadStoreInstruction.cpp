@@ -54,10 +54,9 @@ void LoadStoreInstruction::do_execute(CPURegisters& regs, EndianMemory& mem) con
             value += 8;
     }
 
-    if (!pre_)
-        addr += offset;
+    const addr_t write_addr = pre_ ? addr : addr + offset;
     if (!pre_ || write_) {
-        regs.set_reg(addr_reg_, addr);
+        regs.set_reg(addr_reg_, write_addr);
     }
 
     if (trans_type_ == Load)
